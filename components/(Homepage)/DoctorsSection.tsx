@@ -4,6 +4,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { FaFacebookF, FaInstagram, FaLinkedinIn, FaXTwitter } from "react-icons/fa6";
 import { doctorsData } from "@/data/doctors";
+import { FaArrowRightLong } from "react-icons/fa6";
 
 // Container animation settings for staggered child cards
 const containerVariants = {
@@ -31,22 +32,22 @@ const cardVariants = {
 
 export default function DoctorsSection() {
   return (
-    <section className="py-16 px-4 sm:px-6 lg:px-8 bg-bg-light min-h-screen">
+   <section className="py-16 px-4 bg-primary-dark text-text-light sm:px-6 lg:px-8 min-h-screen">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl font-bold text-text-dark tracking-tight mb-2">
-            Doctors
-          </h2>
-          {/* Decorative Theme Accent Line */}
-          <div className="w-12 h-1 bg-accent-red mx-auto rounded-full mb-4" />
-          
-          <p className="text-sm sm:text-base text-text-muted max-w-xl mx-auto">
-            We Are The First Fully Accredited{" "}
-            <span className="font-bold text-text-dark">NABH</span> Hospital in
-            Entire Saharanpur
-          </p>
-        </div>
+   <div className="text-center mb-12">
+  <h2 className="text-3xl sm:text-4xl font-bold text-text-light tracking-tight mb-2">
+    Meet Our Experts
+  </h2>
+
+  <div className="w-12 h-1 bg-accent-red mx-auto rounded-full mb-4" />
+
+  <p className="text-sm sm:text-base text-text-light/70 max-w-xl mx-auto">
+    We Are The First Fully Accredited{" "}
+    <span className="font-bold text-text-light">NABH</span> Hospital in
+    Entire Saharanpur
+  </p>
+</div>
 
         {/* Doctor Grid Container */}
         <motion.div
@@ -61,7 +62,7 @@ export default function DoctorsSection() {
               key={doctor.id}
               variants={cardVariants}
               whileHover={{ y: -6 }}
-              className="group bg-surface rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-slate-100 flex flex-col justify-between"
+              className="group bg-surface rounded-xl  overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 border border-slate-100 flex flex-col justify-between"
             >
               {/* Doctor Image Container */}
               <div className="relative aspect-[4/5] bg-slate-100 overflow-hidden">
@@ -123,14 +124,69 @@ export default function DoctorsSection() {
               </div>
 
               {/* Doctor Details */}
-              <div className="p-5 flex-1 flex flex-col justify-start">
-                <h3 className="text-lg font-bold text-primary-dark mb-1 leading-snug group-hover:text-accent-red transition-colors">
-                  {doctor.name}
-                </h3>
-                <p className="text-xs text-text-muted font-normal leading-relaxed">
-                  {doctor.specialty}
-                </p>
-              </div>
+          
+<div className="p-5 flex flex-1 flex-col">
+  <h3 className="text-lg font-bold text-primary-dark mb-1 leading-snug group-hover:text-accent-red transition-colors">
+    {doctor.name}
+  </h3>
+
+  <p className="text-xs text-text-muted font-normal leading-relaxed">
+    {doctor.specialty}
+  </p>
+
+  <div className="flex flex-col gap-2 mt-3 text-sm">
+    <p className="flex justify-between items-start gap-3">
+      <span className="text-text-muted">Experience:</span>
+     <span className="font-bold text-text-dark text-right">
+  {doctor.Experience}
+</span>
+    </p>
+
+    <p className="flex justify-between items-start gap-3">
+      <span className="text-text-muted">Qualification:</span>
+      <span className="font-bold text-right text-text-dark">
+        {doctor.Qualification}
+      </span>
+    </p>
+  </div>
+
+
+<motion.button
+  type="button"
+  whileHover={{ scale: 1.02 }}
+  whileTap={{ scale: 0.98 }}
+  transition={{ duration: 0.2 }}
+  className="mt-4 flex w-full items-center justify-between gap-3
+    rounded-xl bg-accent-red px-4 py-2.5
+    font-semibold text-white shadow-sm
+    transition-colors duration-300 hover:bg-primary-dark
+    focus-visible:outline-2 focus-visible:outline-offset-2
+    focus-visible:outline-accent-red "
+>
+  <span className="text-sm">Book Appointment</span>
+
+  <span className="flex h-9 w-9 shrink-0 items-center justify-center
+    rounded-lg bg-white text-accent-red
+    transition-transform duration-300 group-hover:translate-x-1 "
+  >
+    <motion.span
+
+  
+    className="flex h-9 w-9 shrink-0 items-center justify-center
+      rounded-lg bg-white text-accent-red rotate-[-45deg]"
+  >
+    <FaArrowRightLong />
+  </motion.span>
+  </span>
+</motion.button>
+
+</div>
+
+
+{/* Book Appointment */}
+
+
+              
             </motion.div>
           ))}
         </motion.div>

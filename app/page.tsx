@@ -4,15 +4,26 @@ import PatientStories from "../components/(Homepage)/PatientStories";
 import ServicesGrid from "@/components/(Homepage)/ServicesGrid";
 import DoctorsSection from "@/components/(Homepage)/DoctorsSection";
 import Footer from "@/components/(Homepage)/Footer";
+import ValueWeProvide from "@/components/(Homepage)/ValueWeProvide";
+import TreatmentResults from "@/components/(Homepage)/TreatmentResult";
+import ContactSection from "@/components/(Homepage)/ContactSection";
 
 export default function Home() {
   return (
 <>
 <Hero/>
+
 <PatientStories  />
+
+
 <ServicesGrid />
+<TreatmentResults />
+<ValueWeProvide  />
 <DoctorsSection />
+{/* <ContactSection /> */}
+
 <Footer />
+
 
 </>
   );

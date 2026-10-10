@@ -1,24 +1,16 @@
+
 @import "tailwindcss";
 
 :root {
-  /* Primary Dark - Neutral Slate (Doesn't bleed into blue logo) */
   --color-primary-dark: #090D16;
-
-  /* Light Background */
   --color-bg-light: #FAFAFA;
-
-  /* Accent Red */
   --color-accent-red: #E11D48;
-
-  /* Card / Surface */
   --color-surface: #FFFFFF;
 
-  /* Text */
   --color-text-dark: #0F172A;
   --color-text-light: #FAFAFA;
   --color-text-muted: #64748B;
 
-  /* Tailwind background / foreground */
   --background: var(--color-bg-light);
   --foreground: var(--color-text-dark);
 }
@@ -27,20 +19,19 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  --color-primary-dark: var(--color-primary-dark);
-  --color-bg-light: var(--color-bg-light);
-  --color-accent-red: var(--color-accent-red);
-  --color-surface: var(--color-surface);
-  --color-text-dark: var(--color-text-dark);
-  --color-text-light: var(--color-text-light);
-  --color-text-muted: var(--color-text-muted);
+  --color-primary-dark: #090D16;
+  --color-bg-light: #FAFAFA;
+  --color-accent-red: #E11D48;
+  --color-surface: #FFFFFF;
 
-  /* Medical Font Pairing */
+  --color-text-dark: #0F172A;
+  --color-text-light: #FAFAFA;
+  --color-text-muted: #64748B;
+
   --font-sans: var(--font-inter);
   --font-heading: var(--font-montserrat);
 }
 
-/* Automatically apply Montserrat to all standard headings for a clinical, trustworthy look */
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
   font-weight: 600;

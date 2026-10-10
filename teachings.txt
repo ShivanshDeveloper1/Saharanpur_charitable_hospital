@@ -1,1 +1,4 @@
 In CSS positioning, sticky stays in the normal document flow until it hits a specific scroll threshold, while fixed completely leaves the normal document flow from the very beginning.
+
+
+
