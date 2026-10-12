@@ -3,6 +3,7 @@ import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/(Navbar)/Navbar";
 import { WhatsAppButton } from "@/components/(Homepage)/WhatsappButton";
+import MobileBottomBar from "@/components/(Homepage)/MobileBottomBar";
 
 // Inter for highly legible body text and UI elements
 const inter = Inter({
@@ -42,6 +43,7 @@ export default function RootLayout({
 
           {children}
         </main>
+        <MobileBottomBar />
       </body>
     </html>
   );

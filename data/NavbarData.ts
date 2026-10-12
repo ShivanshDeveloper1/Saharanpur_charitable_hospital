@@ -36,7 +36,7 @@ export const navData: NavItem[] = [
   },
    {
     label: 'Contact',
-    href: '/contact-us',
+    href: '/contact',
   },
    {
     label: 'Doctors',

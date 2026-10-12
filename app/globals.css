@@ -12,6 +12,11 @@
 
   --background: var(--color-bg-light);
   --foreground: var(--color-text-dark);
+
+
+  /* new Colors  */
+--color-medical-blue: #DCEAF2;
+--color-medical-line: #355775;
 }
 
 @theme inline {
@@ -29,6 +34,12 @@
 
   --font-sans: var(--font-inter);
   --font-heading: var(--font-montserrat);
+
+
+
+  /* new colors */
+--color-medical-blue: #DCEAF2;
+--color-medical-line: #355775;
 }
 
 h1, h2, h3, h4, h5, h6 {
