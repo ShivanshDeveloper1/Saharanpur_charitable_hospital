@@ -17,9 +17,12 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.yourdomain.com"),
   title: "Medical Center | Expert Healthcare",
   description: "Providing top-quality medical care and patient services.",
 };
+
+
 
 export default function RootLayout({
   children,
