@@ -7,6 +7,7 @@ import Footer from "@/components/(Homepage)/Footer";
 import ValueWeProvide from "@/components/(Homepage)/ValueWeProvide";
 import TreatmentResults from "@/components/(Homepage)/TreatmentResult";
 import ContactSection from "@/components/(Homepage)/ContactSection";
+import BookingSection from "@/components/(Homepage)/BookAppointment";
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
 <ValueWeProvide  />
 <DoctorsSection />
 {/* <ContactSection /> */}
+<BookingSection />
 
 <Footer />
 

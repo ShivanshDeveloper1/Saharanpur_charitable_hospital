@@ -1,10 +1,13 @@
+"use client"
 import Image from "next/image";
 import Link from "next/link";
 import { navData, NavItem } from "@/data/NavbarData";
+import { doctorsData } from "@/data/doctors";
 import MobileMenu from "./MobileMenu";
-
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
+  const router = useRouter()
   return (
     <header className="w-full shadow-md">
       {/* Top Banner / Announcement Bar */}
@@ -65,64 +68,106 @@ const Navbar = () => {
 
           {/* Desktop Navigation (lg and up) */}
           <div className="hidden items-center gap-6 lg:flex">
-            {navData.map((item: NavItem) => (
-              <div key={item.label} className="group relative">
-                {item.href ? (
-                  <Link
-                    href={item.href}
-                    className="font-medium text-white transition-colors hover:text-slate-200"
-                  >
-                    {item.label}
-                  </Link>
-                ) : (
-                  <span className="cursor-pointer py-2 font-medium text-white">
-                    {item.label}
-                  </span>
-                )}
+            {navData.map((item: NavItem) => {
+              const isDoctorsMenu = item.label === "Doctors";
 
-                {/* Dropdown Menu for Items with Children */}
-                {item.children && (
-                  /* Top-padding acts as an invisible bridge so hover never breaks */
-                  <div className="pointer-events-none invisible absolute left-0 top-full z-50 w-64 translate-y-2 pt-3 opacity-0 transition-all duration-300 ease-out group-hover:pointer-events-auto group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
-                    <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white p-2 shadow-2xl ring-1 ring-black/5">
-                      {/* Top Accent Highlight Bar */}
-                      <div className="-mx-2 -mt-2 mb-1 h-1 rounded-t-2xl bg-gradient-to-r from-accent-red via-red-500 to-amber-500" />
+              return (
+                <div key={item.label} className="group relative">
+                  {item.href ? (
+                    <Link
+                      href={item.href}
+                      className="font-medium text-white transition-colors hover:text-slate-200"
+                    >
+                      {item.label}
+                    </Link>
+                  ) : (
+                    <span className="cursor-pointer py-2 font-medium text-white">
+                      {item.label}
+                    </span>
+                  )}
 
-                      <div className="px-3 pb-1 pt-2 text-[11px] font-extrabold uppercase tracking-wider text-slate-400">
-                        Medical Specialties
-                      </div>
+                  {/* Dropdown Menu for Items with Children */}
+                  {item.children && (
+                    /* Top-padding acts as an invisible bridge so hover never breaks */
+                    <div className="pointer-events-none invisible absolute left-0 top-full z-50 w-72 translate-y-2 pt-3 opacity-0 transition-all duration-300 ease-out group-hover:pointer-events-auto group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                      <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white p-2 shadow-2xl ring-1 ring-black/5">
+                        {/* Top Accent Highlight Bar */}
+                        <div className="-mx-2 -mt-2 mb-1 h-1 rounded-t-2xl bg-gradient-to-r from-accent-red via-red-500 to-amber-500" />
 
-                      <div className="flex flex-col gap-1">
-                        {item.children.map((child: NavItem) => (
-                          <Link
-                            key={child.label}
-                            href={child.href || "#"}
-                            className="group/item flex items-center justify-between rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-700 transition-all duration-200 hover:translate-x-1 hover:bg-slate-50 hover:text-accent-red"
-                          >
-                            <span className="flex items-center gap-2.5">
-                              <span className="h-1.5 w-1.5 rounded-full bg-slate-300 transition-all duration-300 group-hover/item:w-3 group-hover/item:bg-accent-red" />
-                              {child.label}
-                            </span>
+                        <div className="px-3 pb-1 pt-2 text-[11px] font-extrabold uppercase tracking-wider text-slate-400">
+                          {isDoctorsMenu ? "Our Specialists" : "Medical Specialties"}
+                        </div>
 
-                            <svg
-                              className="h-4 w-4 -translate-x-2 text-accent-red opacity-0 transition-all duration-200 group-hover/item:translate-x-0 group-hover/item:opacity-100"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                              strokeWidth={2.5}
-                            >
-                              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                            </svg>
-                          </Link>
-                        ))}
+                        {/* Conditional rendering for Doctors vs other dropdowns */}
+                        <div className={`flex flex-col gap-1 ${isDoctorsMenu ? "max-h-[380px] overflow-y-auto pr-1" : ""}`}>
+                          {isDoctorsMenu ? (
+                            <>
+                              {doctorsData.map((doctor) => (
+                                <Link
+                                  key={doctor.slug}
+                                  href={`/doctor/${doctor.slug}`}
+                                  className="group/item flex items-center gap-3 rounded-xl px-3 py-2 text-slate-700 transition-all duration-200 hover:bg-slate-50 hover:text-accent-red"
+                                >
+                                  {/* Doctor Image Avatar */}
+                                  <div className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full border border-slate-200 bg-slate-100">
+                                    <Image
+                                      src={doctor.image}
+                                      alt={doctor.name}
+                                      fill
+                                      className="object-cover"
+                                    />
+                                  </div>
+                                  {/* Doctor Name & Specialty */}
+                                  <div className="flex flex-col overflow-hidden">
+                                    <span className="truncate text-xs font-bold text-slate-800 group-hover/item:text-accent-red">
+                                      {doctor.name}
+                                    </span>
+                                    <span className="truncate text-[11px] font-medium text-slate-500">
+                                      {doctor.specialty}
+                                    </span>
+                                  </div>
+                                </Link>
+                              ))}
+                              <Link
+                                href="/#doctors-section"
+                                className="mt-1 block rounded-xl bg-slate-50 px-3 py-2.5 text-center text-xs font-bold text-accent-red transition-colors hover:bg-red-50"
+                              >
+                                View All Doctors &rarr;
+                              </Link>
+                            </>
+                          ) : (
+                            item.children.map((child: NavItem) => (
+                              <Link
+                                key={child.label}
+                                href={child.href || "#"}
+                                className="group/item flex items-center justify-between rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-700 transition-all duration-200 hover:translate-x-1 hover:bg-slate-50 hover:text-accent-red"
+                              >
+                                <span className="flex items-center gap-2.5">
+                                  <span className="h-1.5 w-1.5 rounded-full bg-slate-300 transition-all duration-300 group-hover/item:w-3 group-hover/item:bg-accent-red" />
+                                  {child.label}
+                                </span>
+
+                                <svg
+                                  className="h-4 w-4 -translate-x-2 text-accent-red opacity-0 transition-all duration-200 group-hover/item:translate-x-0 group-hover/item:opacity-100"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                  strokeWidth={2.5}
+                                >
+                                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                                </svg>
+                              </Link>
+                            ))
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )}
-              </div>
-            ))}
+                  )}
+                </div>
+              );
+            })}
 
-            <button className="rounded-2xl bg-accent-red px-6 py-3 font-bold text-text-light shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-red-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-accent-red/50 active:scale-95">
+            <button onClick={()=> router.push('/#Book_appointment')} className="rounded-2xl bg-accent-red px-6 py-3 font-bold text-text-light shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-red-700 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-accent-red/50 active:scale-95">
               Book Appointment
             </button>
           </div>
