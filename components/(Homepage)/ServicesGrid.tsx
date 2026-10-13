@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { servicesData } from "@/data/servicesData";
+import Link from "next/link";
 
 export default function ServicesGrid() {
   const [activeImageIndices, setActiveImageIndices] = useState<
@@ -100,15 +101,13 @@ export default function ServicesGrid() {
             const Icon = service.icon;
 
             return (
-              <motion.article
+              <Link
                 key={service.id}
-                initial={{ opacity: 0, y: 22 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.15 }}
-                transition={{
-                  duration: 0.45,
-                  delay: (index % 3) * 0.08,
-                }}
+                href={`/services/${service.slug}`}
+                
+              
+              
+           
                 className="group flex flex-col overflow-hidden rounded-3xl border border-black/5 bg-surface  shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-accent-red/20 hover:shadow-xl"
               >
                 {/* Image Carousel */}
@@ -195,7 +194,7 @@ export default function ServicesGrid() {
                     </div>
                   )}
                 </div>
-              </motion.article>
+              </Link>
             );
           })}
         </div>
