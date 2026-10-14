@@ -58,7 +58,7 @@ export const navData: NavItem[] = [
     ]
   },
      {
-    label: 'Gallery',
-    href: '/gallery',
+    label: 'Blog',
+    href: '/blog',
   },
 ];

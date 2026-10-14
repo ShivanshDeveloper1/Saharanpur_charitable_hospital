@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/(Navbar)/Navbar";
 import { WhatsAppButton } from "@/components/(Homepage)/WhatsappButton";
 import MobileBottomBar from "@/components/(Homepage)/MobileBottomBar";
+import Footer from "@/components/(Homepage)/Footer";
 
 // Inter for highly legible body text and UI elements
 const inter = Inter({
@@ -44,6 +45,7 @@ export default function RootLayout({
           {children}
         </main>
         <MobileBottomBar />
+        <Footer />
       </body>
     </html>
   );
