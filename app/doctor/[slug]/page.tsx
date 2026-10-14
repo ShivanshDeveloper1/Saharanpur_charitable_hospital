@@ -26,7 +26,7 @@ if (!doctor) {
   }
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 text-gray-900">
-      <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
+      <div className="max-w-7xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
         
         {/* Top Header Card */}
         <div className="md:flex bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-8 items-center gap-8">
@@ -122,7 +122,7 @@ if (!doctor) {
                 )}
               </div>
 
-              <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-xl shadow transition duration-200 mb-3 text-center block">
+              <button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-4 rounded-xl shadow transition duration-200 mb-3 text-center block cursor-pointer">
                 Book Appointment
               </button>
             </div>
