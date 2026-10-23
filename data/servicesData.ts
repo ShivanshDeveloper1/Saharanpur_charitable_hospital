@@ -27,6 +27,7 @@ export interface ServiceItem {
     img:string;
     description: string;
   }[];
+  
   faqs: {
     question: string;
     answer: string;
@@ -670,6 +671,26 @@ export const servicesData: ServiceItem[] = [
     ],
   },
     ],
+
+    why: {
+  title: "Why Choose Our Pediatric Care",
+  subtitle: "Gentle, expert care for every stage of childhood",
+  points: [
+    "Experienced pediatrician and neonatologist with 14+ years of child care",
+    "Complete immunization and growth monitoring under one roof",
+    "Kid-friendly, comforting environment",
+    "Clear guidance for parents at every visit",
+  ],
+},
+steps: {
+  title: "3 Easy Steps to Your Child's Care",
+  items: [
+    { title: "Book Your Appointment Online", description: "Choose a convenient date and time using the form on this page." },
+    { title: "Consult Your Pediatrician", description: "The doctor examines your child and reviews their history." },
+    { title: "Follow the Care Plan", description: "Receive clear guidance, treatment, and follow-up visits." },
+  ],
+},
+testimonials: [],
     faqs: [
       {
         question: "When should I take my child to a pediatrician?",
