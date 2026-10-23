@@ -1,30 +1,41 @@
 import React from 'react';
 
+
+interface ProblemContent {
+  heading: string;
+  body: string;
+}
+
 interface ProblemItem {
   id: string;
   track: string;
   title: string;
   description: string;
+  content?: ProblemContent[];
 }
 
 interface ProblemsWeTreatProps {
   problems?: ProblemItem[];
   serviceTitle?: string;
+  serviceSlug?: string;
 }
 
-export default function ProblemsWeTreat({ problems = [], serviceTitle = "Specialized" }: ProblemsWeTreatProps) {
-  // Fallback default conditions if none provided
-  const displayProblems = problems.length > 0 ? problems : [
-    { id: '01', track: 'Clinical Care', title: 'Comprehensive Evaluation', description: 'Advanced diagnostic review and personalized care protocols.' },
-    { id: '02', track: 'Intervention', title: 'Targeted Treatments', description: 'Minimally invasive therapies and expert surgical options.' },
-    { id: '03', track: 'Rehabilitation', title: 'Recovery & Support', description: 'Structured post-procedure care for long-term health.' }
-  ];
+export default function ProblemsWeTreat({ problems = [], serviceTitle = "Specialized", serviceSlug = "services" }: ProblemsWeTreatProps) {
+const displayProblems = problems;
 
   const defaultImages = [
     'https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?auto=format&fit=crop&w=800&q=80',
     'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=1000&q=80',
     'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80'
   ];
+
+  // Helper to convert problem title to URL-friendly slug
+  const createSlug = (text: string) => {
+    return text
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)+/g, '');
+  };
 
   return (
     <section className="relative w-full bg-background text-foreground px-4 sm:px-8 lg:px-12 py-16 lg:py-24 overflow-hidden">
@@ -52,6 +63,8 @@ export default function ProblemsWeTreat({ problems = [], serviceTitle = "Special
           {displayProblems.map((item, index) => {
             const isFeatured = index === 1;
             const cardImage = defaultImages[index % defaultImages.length];
+            const categorySlug = createSlug(item.title);
+            const destinationUrl = `/services/${serviceSlug}/${categorySlug}`;
 
             return (
               <article
@@ -104,16 +117,23 @@ export default function ProblemsWeTreat({ problems = [], serviceTitle = "Special
                   </div>
 
                   <div className={`pt-6 mt-5 border-t flex items-center justify-between ${isFeatured ? 'border-white/10' : 'border-medical-line/10'}`}>
-                    <span className={`text-xs font-medium tracking-wide uppercase font-heading transition-colors ${
-                      isFeatured ? 'text-white group-hover:text-accent-red' : 'text-primary-dark group-hover:text-accent-red'
-                    }`}>
-                      Explore Care Pathway
-                    </span>
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300 ${
-                      isFeatured 
-                        ? 'bg-white/10 border border-white/20 text-white group-hover:bg-accent-red group-hover:border-accent-red' 
-                        : 'border border-medical-line/30 text-primary-dark group-hover:bg-accent-red group-hover:text-white group-hover:border-accent-red'
-                    }`}>
+                    <a
+                      href={destinationUrl}
+                      className={`text-xs font-medium tracking-wide uppercase font-heading transition-colors inline-flex items-center gap-2 ${
+                        isFeatured ? 'text-white group-hover:text-accent-red' : 'text-primary-dark group-hover:text-accent-red'
+                      }`}
+                    >
+                      <span>Explore Care Pathway</span>
+                    </a>
+                    <a
+                      href={destinationUrl}
+                      className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all duration-300 ${
+                        isFeatured 
+                          ? 'bg-white/10 border border-white/20 text-white group-hover:bg-accent-red group-hover:border-accent-red' 
+                          : 'border border-medical-line/30 text-primary-dark group-hover:bg-accent-red group-hover:text-white group-hover:border-accent-red'
+                      }`}
+                      aria-label={`Explore ${item.title}`}
+                    >
                       <svg
                         className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5"
                         fill="none"
@@ -127,7 +147,7 @@ export default function ProblemsWeTreat({ problems = [], serviceTitle = "Special
                           d="M14 5l7 7m0 0l-7 7m7-7H3"
                         />
                       </svg>
-                    </div>
+                    </a>
                   </div>
                 </div>
               </article>

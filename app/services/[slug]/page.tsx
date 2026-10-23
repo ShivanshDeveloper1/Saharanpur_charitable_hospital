@@ -138,7 +138,7 @@ export default async function ServicePage({
       <main className="min-h-screen bg-primary-dark">
         <HospitalIntroduction serviceTitle={service.title} subtitle={service.subtitle} />
         <DoctorSpecialist doctor={service.doctor} serviceTitle={service.title} serviceSlug={service.slug} /> 
-        <ProblemsWeTreat problems={service.problems} serviceTitle={service.title} />
+        <ProblemsWeTreat problems={service.problems} serviceTitle={service.title} serviceSlug={service.slug} />
         <FrequesntlyAskedQuestion />
       </main>
     </main>

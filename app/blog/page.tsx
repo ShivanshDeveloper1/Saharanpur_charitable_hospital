@@ -1,6 +1,7 @@
 
 import Image from 'next/image'
 import React from 'react'
+import BlogSelection from '@/components/(Blog)/BlogSection'
 
 const Page = () => {
   return (
@@ -42,6 +43,7 @@ const Page = () => {
             </p>
 
             <div className="mt-8 h-1 w-20 rounded-full bg-accent-red" />
+            
           </div>
         </div>
 
@@ -49,8 +51,13 @@ const Page = () => {
         <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-primary-dark/30 to-transparent" />
       </section>
 
+      {/* 2nd thing */}
+
+      {/* Blog Showing */}
+
 
       <section>
+        <BlogSelection />
         
       </section>
     </main>

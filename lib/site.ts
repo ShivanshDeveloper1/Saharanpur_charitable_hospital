@@ -4,7 +4,7 @@ export const SITE = {
   name: "Saharanpur Charitable Hospital",
   url: "https://www.yourdomain.com",
   phone: "+917618550475", // used in tel: links
-  phoneDisplay: "+91 99999 99999", // shown to people
+  phoneDisplay: "+91 7618550475",
   email: "info@yourdomain.com",
   address: {
     street: "Your street address",

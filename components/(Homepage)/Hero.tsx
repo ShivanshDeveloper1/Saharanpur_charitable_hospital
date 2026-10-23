@@ -11,13 +11,15 @@ import { SITE } from "@/lib/site"
 const slides = [
   {
     src: "https://images.unsplash.com/photo-1579684385127-1ef15d508118?q=75&w=1600&auto=format&fit=crop",
-    alt: "Orthopedic doctor consulting a patient at our hospital in Saharanpur", // describe your REAL photo
-    message: "Proudly accepting Ayushman Bharat cards for comprehensive medical coverage.",
+       alt: "Healthcare professionals in a clinical setting",
+    message:
+      "Ayushman Bharat beneficiaries can access eligible treatments at our hospital, subject to scheme rules.",
   },
   {
     src: "https://plus.unsplash.com/premium_photo-1681843126728-04eab730febe?q=75&w=1600&auto=format&fit=crop",
-    alt: "Modern orthopedic operation theatre and care team in Saharanpur",
-    message: "State-of-the-art facilities with compassionate care you can count on.",
+     alt: "Medical care in a modern healthcare setting",
+    message:
+      "Explore our medical specialties, doctors, and available treatment services.",
   },
 ];
 
@@ -59,11 +61,11 @@ export default function Hero() {
 
       {/* Text (static, so it is great for SEO and loads instantly) */}
       <div className="relative z-10 mx-auto flex h-full max-w-7xl items-center px-5 sm:px-8">
-        <div className="max-w-3xl text-text-light">
+        <div className="max-w-4xl text-text-light">
           <h1 className="text-balance text-4xl font-bold leading-[1.05] tracking-tight drop-shadow-md sm:text-5xl lg:text-7xl">
-            Orthopedic Hospital in Saharanpur
+            Multi-Speciality Hospital in Saharanpur
             <span className="mt-4 block text-xl font-medium leading-snug tracking-normal text-white/85 sm:text-2xl lg:text-3xl">
-              Knee &amp; hip replacement, fracture, spine and sports injury care.
+             Provinding Advanced Mediacal Care &amp; 24x7 emergency services, and expert specialists .
             </span>
           </h1>
 
