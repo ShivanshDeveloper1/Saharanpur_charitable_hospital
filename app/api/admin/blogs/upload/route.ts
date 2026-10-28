@@ -1,7 +1,7 @@
 // app/api/admin/blogs/route.ts
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/db";
-import BlogPost from "@/models/BlogPost";
+import BlogPost from "@/models/Blog";
 
 // "text [link](/slug) more" -> segments
 function toSegments(text: string) {
