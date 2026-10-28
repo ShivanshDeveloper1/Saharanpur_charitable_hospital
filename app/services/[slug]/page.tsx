@@ -7,6 +7,10 @@ import HospitalIntroduction from "@/components/(notSure)/HospitalIntroduction";
 import DoctorSpecialist from "@/components/(notSure)/DoctorSpecialist";
 import FrequesntlyAskedQuestion from "@/components/(notSure)/FrequesntlyAskedQuestion";
 
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { getDoctorBySlug } from "@/data/doctors";
+
 const sans = Poppins({
   subsets: ["latin"],
   weight: ["400", "500", "600", "800"],
@@ -24,11 +28,68 @@ const dots = (color: string) => ({
   backgroundSize: "24px 24px",
 });
 
+const BASE_URL = (
+  process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
+).replace(/\/+$/, "");
+
 export async function generateStaticParams() {
   return servicesData.map((service) => ({
     slug: service.slug,
   }));
 }
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const service = getServiceBySlug(slug);
+
+  if (!service) {
+    return { title: "Service Not Found | SCHARI Hospital" };
+  }
+  
+
+  const url = `${BASE_URL}/services/${service.slug}`;
+  const title = `${service.title} in Saharanpur | Saharanpur Charitable Hospital`;
+  const description = service.description;
+  const image = service.images?.[0];
+
+  return {
+    title,
+    description,
+    ...(service.keywords?.length
+      ? { keywords: service.keywords }
+      : {}),
+    alternates: {
+      canonical: url,
+    },
+    openGraph: {
+      title,
+      description,
+      url,
+      siteName: "SCHARI Hospital",
+      type: "website",
+      ...(image ? { images: [{ url: image, alt: service.title }] } : {}),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      ...(image ? { images: [image] } : {}),
+    },
+  };
+}
+
+
+
+
+
+
+
+
+
 
 export default async function ServicePage({
   params,
@@ -37,6 +98,12 @@ export default async function ServicePage({
 }) {
   const { slug } = await params;
   const service = getServiceBySlug(slug);
+
+  if (!service) notFound();   // 👈 yeh pehle hona chahiye
+
+  const doctor = getDoctorBySlug(service.doctorSlug)
+
+
   const doc = service.doctor;
 
   return (
@@ -137,7 +204,7 @@ export default async function ServicePage({
       {/* Hospital Sub-components */}
       <main className="min-h-screen bg-primary-dark">
         <HospitalIntroduction serviceTitle={service.title} subtitle={service.subtitle} />
-        <DoctorSpecialist doctor={service.doctor} serviceTitle={service.title} serviceSlug={service.slug} /> 
+         <DoctorSpecialist doctor={doctor} serviceTitle={service.title} serviceSlug={service.slug} />
         <ProblemsWeTreat problems={service.problems} serviceTitle={service.title} serviceSlug={service.slug} />
         <FrequesntlyAskedQuestion />
       </main>

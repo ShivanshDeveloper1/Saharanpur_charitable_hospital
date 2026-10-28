@@ -2,3 +2,4 @@ In CSS positioning, sticky stays in the normal document flow until it hits a spe
 
 
 
+Proper image seo 

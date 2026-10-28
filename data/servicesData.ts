@@ -40,6 +40,17 @@ export const servicesData: ServiceItem[] = [
     slug: "orthopedics",
     title: "Orthopedics",
     subtitle: "Advanced Orthopedic Care",
+    keywords:[
+        "orthopedic hospital in Saharanpur",
+  "best orthopedic doctor in Saharanpur",
+  "joint replacement Saharanpur",
+  "knee replacement surgery Saharanpur",
+  "arthroscopy Saharanpur",
+  "fracture treatment Saharanpur",
+  "Dr. Samarthya Gupta",
+  "SCHARI Hospital",
+    ],
+      doctorSlug: "dr-saamarthya-gupta", 
     description:
       "Expert care for bones, joints, and orthopedic surgery in Saharanpur. Your trusted partner for better movement and a healthier life.",
     discount: "20% OFF",
@@ -51,147 +62,318 @@ export const servicesData: ServiceItem[] = [
     doctor: {
       name: "Dr. Samarthya Gupta, MD",
       title: "Senior Consultant Surgeon & Director of Adult Reconstruction",
-      qualification: "American Board of Orthopaedic Surgery (ABOS) Certified",
+      qualification: "MBBS, MS (Orthopaedics), Fellowship in Joint Replacement & Arthroscopy",
       experience: "18+ Years Subspecialized Joint Surgery",
       philosophy:
         "Dedicated to restoring natural biomechanics and pain-free mobility through precision-guided surgical techniques.",
       image: "/doctors/samarthya_gupta_orthopedic_surgeon.webp",
       badge: "CHIEF SURGEON",
     },
-    problems: [
+  problems: [
+  {
+    id: "01",
+    slug: "knee-pain-arthritis",
+    track: "Reconstructive",
+    keywords: [
+  "knee pain doctor in Saharanpur",
+  "knee arthritis treatment Saharanpur",
+  "knee replacement cost in Saharanpur",
+  "osteoarthritis knee treatment",
+],
+    title: "Knee Pain & Arthritis",
+    description:
+      "Comprehensive evaluation and treatment options for knee pain, osteoarthritis, and advanced knee joint damage.",
+    img: "https://plus.unsplash.com/premium_photo-1681967162693-4ad328adef4f?q=80&w=1152&auto=format&fit=crop",
+    symptoms: [
+      "Pain while walking or climbing stairs",
+      "Stiffness after sitting or resting",
+      "Swelling around the knee",
+      "Reduced flexibility",
+      "Difficulty bending or straightening the leg",
+    ],
+    content: [
       {
-        id: "01",
-        slug: "knee-pain-arthritis",
-        track: "Reconstructive",
-        title: "Knee Pain & Arthritis",
-        description:
-          "Advanced cartilage restoration and total knee arthroscopy procedures.",
-        img: "https://plus.unsplash.com/premium_photo-1681967162693-4ad328adef4f?q=80&w=1152&auto=format&fit=crop",
-        symptoms: [
-          "Pain while walking or climbing stairs",
-          "Stiffness after sitting or resting",
-          "Swelling around the knee",
-          "Reduced flexibility",
-          "Difficulty bending or straightening the leg",
-        ],
-        content: [
-          {
-            heading: "What Is Knee Pain and Arthritis?",
-            body: "Knee pain can affect people of different ages and may develop due to an injury, overuse, inflammation, or age-related changes in the joint. Knee osteoarthritis occurs when the protective cartilage in the joint gradually wears down, which may cause pain, stiffness, swelling, and difficulty with everyday movements.",
-          },
-          {
-            heading: "Common Causes of Knee Pain",
-            body: "Knee discomfort may be associated with osteoarthritis, ligament injuries, meniscus tears, tendon problems, previous trauma, or repetitive strain. Identifying the underlying cause is important because treatment depends on the type and severity of the condition.",
-          },
-          {
-            heading: "Symptoms You Should Not Ignore",
-            body: "A knee that becomes suddenly swollen, severely painful, hot, or red, particularly with fever, needs prompt medical assessment. Do not wait for pain to become unbearable before seeking a consultation.",
-          },
-          {
-            heading: "How Is Knee Arthritis Diagnosed?",
-            body: "An orthopedic specialist may review your symptoms, medical history, walking pattern, and knee movement. Depending on the findings, X-rays or other imaging tests may be recommended to assess joint changes, fractures, or soft-tissue injuries.",
-          },
-          {
-            heading: "Knee Pain Treatment Options",
-            body: "Treatment depends on the diagnosis and severity of symptoms. Options may include activity modification, prescribed medication, physiotherapy, suitable exercises, or selected injections. When severe arthritis continues to limit daily activities despite appropriate non-surgical treatment, knee replacement surgery may be considered after an orthopedic evaluation.",
-          },
-          {
-            heading: "When Should You Consult an Orthopedic Doctor?",
-            body: "Consider an orthopedic consultation if knee pain persists, swelling repeatedly occurs, movement becomes restricted, or walking and daily activities are affected. Early assessment can help identify the cause and guide an appropriate treatment plan.",
-          },
-        ],
+        heading: "What Is Knee Pain and Arthritis?",
+        body: "Knee pain can develop due to an injury, overuse, inflammation, or age-related changes in the joint. Knee osteoarthritis occurs when the protective cartilage gradually wears down, causing pain, stiffness, swelling, and difficulty with everyday activities. If knee pain is affecting your ability to walk, climb stairs, or sleep comfortably, an orthopedic assessment can help identify the cause.",
       },
       {
-        id: "02",
-        slug: "ligament-tears",
-        track: "Sports Injury",
-        title: "Ligament Tears (ACL/PCL)",
-        description:
-          "Minimally invasive arthroscopic reconstruction for high mobility.",
-        img: "https://plus.unsplash.com/premium_photo-1681967162693-4ad328adef4f?q=80&w=1152&auto=format&fit=crop",
-        symptoms: [
-          "A popping sound at the time of injury",
-          "Rapid swelling within the first few hours",
-          "Knee feeling unstable or giving way",
-          "Difficulty putting full weight on the leg",
-          "Limited range of motion",
-        ],
-        content: [
-          {
-            heading: "Sports Trauma & Instability",
-            body: "Ligament ruptures from athletic trauma or sudden pivoting destabilize the knee joint, risking long-term meniscus damage if left untreated.",
-          },
-          {
-            heading: "Minimally Invasive Arthroscopy",
-            body: "Using high-definition fiber-optic cameras and precision graft fixation, we reconstruct torn ligaments with minimal scarring and rapid functional recovery.",
-          },
-          {
-            heading: "Rehabilitation After Surgery",
-            body: "Recovery is a structured process. Guided physiotherapy starts early to restore motion, rebuild thigh strength, and retrain balance so you can return to your activity safely.",
-          },
-        ],
+        heading: "Common Causes of Knee Pain",
+        body: "Common causes include knee osteoarthritis, ligament injuries, meniscus tears, tendon problems, previous injuries, and repetitive strain. The right treatment depends on what is causing your pain, your activity level, and the extent of joint damage.",
       },
       {
-        id: "03",
-        slug: "chronic-back-pain",
-        track: "Spine Health",
-        title: "Chronic Back Pain",
-        description:
-          "Comprehensive spinal decompression and targeted pain management.",
-        img: "https://plus.unsplash.com/premium_photo-1681967162693-4ad328adef4f?q=80&w=1152&auto=format&fit=crop",
-        symptoms: [
-          "Lower back pain lasting more than a few weeks",
-          "Pain radiating down the leg",
-          "Numbness or tingling in the feet",
-          "Pain that worsens after sitting or standing for long periods",
-          "Weakness in the leg",
-        ],
-        content: [
-          {
-            heading: "Spinal Pathology & Nerve Compression",
-            body: "Chronic lower back pain frequently stems from disc herniation, spinal stenosis, or degenerative facet joint arthritis pressing against spinal nerves.",
-          },
-          {
-            heading: "Comprehensive Decompression Care",
-            body: "We offer customized therapeutic regimens, image-guided epidural injections, and advanced microscopic spine decompression surgeries for permanent relief.",
-          },
-          {
-            heading: "Lifestyle and Prevention",
-            body: "Posture correction, core strengthening, weight management, and ergonomic changes at work can reduce strain on the spine and lower the chance of recurring pain.",
-          },
-        ],
+        heading: "Symptoms You Should Not Ignore",
+        body: "Persistent knee pain, recurring swelling, stiffness after resting, difficulty standing up, or reduced walking ability may indicate a condition that needs medical evaluation. Sudden severe pain, a hot or red joint, fever, major swelling after an injury, or inability to bear weight requires prompt medical assessment.",
       },
       {
-        id: "04",
-        slug: "hip-shoulder-pain",
-        track: "Joint Care",
-        title: "Hip & Shoulder Joint Pain",
-        description:
-          "Accurate diagnosis and treatment for hip and shoulder conditions.",
-        img: "https://images.unsplash.com/photo-1624716472114-a7c5f18ac832?q=80&w=1172&auto=format&fit=crop",
-        symptoms: [
-          "Pain in the groin, hip, or buttock",
-          "Shoulder pain when lifting the arm",
-          "Night pain that disturbs sleep",
-          "Stiffness that limits daily tasks",
-          "Clicking, catching, or locking sensation",
-        ],
-        content: [
-          {
-            heading: "Why Hip and Shoulder Pain Develops",
-            body: "Hip pain may come from arthritis, cartilage damage, or hip impingement. Shoulder pain is often linked to rotator cuff tears, frozen shoulder, or repetitive overhead movement.",
-          },
-          {
-            heading: "Non-Surgical Management",
-            body: "Most patients improve with a combination of physiotherapy, anti-inflammatory medication, activity changes, and targeted injections before any surgery is considered.",
-          },
-          {
-            heading: "Advanced Surgical Options",
-            body: "When conservative care is not enough, minimally invasive arthroscopic procedures and joint replacement surgery can restore comfortable movement with a carefully planned recovery.",
-          },
-        ],
+        heading: "How Is Knee Arthritis Diagnosed?",
+        body: "An orthopedic doctor may review your symptoms, medical history, walking pattern, and knee movement. X-rays may be recommended to assess arthritis and joint damage, while other imaging tests may be considered when an injury or soft-tissue problem is suspected. Diagnosis helps determine which treatment options are appropriate for you.",
+      },
+      {
+        heading: "Knee Pain and Arthritis Treatment Options",
+        body: "Treatment may include activity modification, prescribed medication, physiotherapy, appropriate exercises, or selected injections when clinically suitable. For advanced knee arthritis that continues to cause significant pain and restrict daily activities despite appropriate non-surgical treatment, knee replacement surgery may be considered. Surgery is not necessary for every patient, and the decision should follow an individual orthopedic evaluation.",
+      },
+      {
+        heading: "When Should You Consult a Knee Pain Specialist?",
+        body: "Consider consulting an orthopedic specialist if knee pain keeps returning, walking becomes difficult, swelling persists, or medication and home care are not providing adequate relief. If you are searching for a knee pain doctor or knee arthritis treatment in Saharanpur, SCHARI offers an opportunity to have your symptoms assessed and discuss suitable treatment options with its orthopedic team. Book a consultation to understand the cause of your pain and your next steps.",
       },
     ],
+    faqs: [
+      {
+        question: "Which doctor should I consult for severe knee pain in Saharanpur?",
+        answer:
+          "An orthopedic specialist can assess persistent or severe knee pain, identify its likely cause, and discuss suitable treatment options. You can book an orthopedic consultation at SCHARI in Saharanpur for an individual evaluation.",
+      },
+      {
+        question: "Can knee arthritis be treated without surgery?",
+        answer:
+          "Yes. Depending on the severity of arthritis, treatment may include physiotherapy, appropriate exercises, activity modification, and medication prescribed by a doctor. Knee replacement may be considered when advanced arthritis causes significant disability despite suitable non-surgical care.",
+      },
+      {
+        question: "When should I consider knee replacement surgery?",
+        answer:
+          "Knee replacement may be considered when advanced joint damage causes persistent pain and limits walking, sleep, or everyday activities despite appropriate non-surgical treatment. An orthopedic specialist can assess whether it is suitable for you.",
+      },
+      {
+        question: "What is the cost of knee replacement surgery in Saharanpur?",
+        answer:
+          "The cost depends on the type of procedure, implants, hospital stay, investigations, and individual medical needs. Contact SCHARI directly for current pricing and an estimate based on your evaluation.",
+      },
+      {
+        question: "Can I consult an orthopedic doctor if knee pain has lasted for years?",
+        answer:
+          "Yes. Long-standing knee pain should be evaluated to identify the cause and assess available treatments. Bring any previous X-rays, MRI scans, prescriptions, or medical reports to your consultation if available.",
+      },
+    ],
+  },
+
+  {
+    id: "02",
+    slug: "ligament-tears",
+    track: "Sports Injury",
+    title: "Ligament Tears (ACL/PCL)",
+    keywords: [
+  "ACL tear treatment Saharanpur",
+  "ACL reconstruction surgery Saharanpur",
+  "PCL injury doctor",
+  "sports injury doctor Saharanpur",
+],
+    description:
+      "Evaluation and treatment options for ACL and PCL injuries, knee instability, and sports-related ligament damage.",
+    img: "https://plus.unsplash.com/premium_photo-1681967162693-4ad328adef4f?q=80&w=1152&auto=format&fit=crop",
+    symptoms: [
+      "A popping sound at the time of injury",
+      "Rapid swelling within the first few hours",
+      "Knee feeling unstable or giving way",
+      "Difficulty putting full weight on the leg",
+      "Limited range of motion",
+    ],
+    content: [
+      {
+        heading: "What Are ACL and PCL Ligament Tears?",
+        body: "The anterior cruciate ligament (ACL) and posterior cruciate ligament (PCL) help stabilise the knee. These ligaments can be injured during sports, sudden changes of direction, falls, or road accidents. A tear may cause pain, swelling, restricted movement, or a feeling that the knee cannot support your weight.",
+      },
+      {
+        heading: "Common Causes and Symptoms of Ligament Injuries",
+        body: "ACL and PCL injuries may occur during pivoting movements, sudden stops, direct impact, or twisting injuries. Symptoms can include a popping sensation, rapid swelling, difficulty bending the knee, and instability while walking or playing sports. A suspected ligament tear should be assessed rather than diagnosed from symptoms alone.",
+      },
+      {
+        heading: "How Is an ACL or PCL Tear Diagnosed?",
+        body: "An orthopedic specialist may examine knee stability, movement, swelling, and the circumstances of the injury. X-rays may help identify associated bone injuries, while an MRI may be recommended to assess ligament damage and other structures such as the meniscus. The examination and imaging findings help guide the treatment plan.",
+      },
+      {
+        heading: "ACL and PCL Tear Treatment Options",
+        body: "Treatment depends on the ligament involved, the severity of the tear, knee stability, associated injuries, and your activity goals. Some injuries can be managed with rehabilitation, strengthening exercises, activity modification, and a brace when appropriate. Selected patients, particularly those with significant instability or combined injuries, may be considered for ligament reconstruction surgery.",
+      },
+      {
+        heading: "What Is Arthroscopic Ligament Reconstruction?",
+        body: "Arthroscopic ligament reconstruction is a surgical option in which a surgeon uses small incisions and a camera to help treat certain knee injuries. When reconstruction is indicated, a graft may be used to restore stability. The procedure, recovery timeline, and expected results vary by injury and patient. Surgery is followed by a structured rehabilitation programme.",
+      },
+      {
+        heading: "When Should You Consult an ACL or PCL Specialist?",
+        body: "Seek an orthopedic assessment if your knee gives way, remains swollen after an injury, feels unstable, or prevents you from returning to normal activities. If you are searching for an ACL tear doctor or ligament reconstruction consultation in Saharanpur, SCHARI's orthopedic team can evaluate your injury and discuss appropriate options. Early assessment is especially important when you cannot bear weight or suspect a significant injury.",
+      },
+    ],
+    faqs: [
+      {
+        question: "Which doctor should I consult for an ACL tear in Saharanpur?",
+        answer:
+          "An orthopedic specialist experienced in knee and sports injuries can assess a suspected ACL tear. At SCHARI in Saharanpur, you can request a consultation to discuss your symptoms, examination, imaging, and treatment options.",
+      },
+      {
+        question: "Does every ACL tear require surgery?",
+        answer:
+          "No. Some ACL injuries can be managed without surgery using rehabilitation and activity modification. Reconstruction may be considered for significant instability, associated injuries, or when the patient's activity goals make it appropriate.",
+      },
+      {
+        question: "How much does ACL reconstruction surgery cost?",
+        answer:
+          "The cost varies with the procedure, graft and fixation materials, investigations, hospital stay, and rehabilitation requirements. Contact SCHARI for current pricing and a patient-specific estimate.",
+      },
+      {
+        question: "How long does recovery from ACL reconstruction take?",
+        answer:
+          "Recovery commonly takes several months and may take around 9–12 months or longer before return to demanding pivoting sports. Progress depends on healing, strength, knee stability, and rehabilitation milestones; return to sport should be cleared by the treating team.",
+      },
+      {
+        question: "Can I walk with a torn ACL?",
+        answer:
+          "Some people can walk with an ACL tear, while others experience pain, swelling, or instability. Being able to walk does not rule out a serious injury. An orthopedic assessment can help determine the extent of damage.",
+      },
+    ],
+  },
+
+  {
+    id: "03",
+    slug: "chronic-back-pain",
+    track: "Spine Health",
+    title: "Chronic Back Pain",
+    keywords: [
+  "back pain doctor in Saharanpur",
+  "slip disc treatment Saharanpur",
+  "chronic back pain treatment",
+  "spine specialist Saharanpur",
+],
+    description:
+      "Assessment and personalized treatment options for persistent back pain, disc problems, and spinal conditions.",
+    img: "https://plus.unsplash.com/premium_photo-1681967162693-4ad328adef4f?q=80&w=1152&auto=format&fit=crop",
+    symptoms: [
+      "Lower back pain lasting more than a few weeks",
+      "Pain radiating down the leg",
+      "Numbness or tingling in the feet",
+      "Pain that worsens after sitting or standing for long periods",
+      "Weakness in the leg",
+    ],
+    content: [
+      {
+        heading: "What Is Chronic Back Pain?",
+        body: "Chronic back pain is pain that persists or repeatedly returns over an extended period. It may arise from muscle strain, disc problems, age-related spinal changes, arthritis, or nerve compression. When back pain affects sleep, work, walking, or everyday activities, a medical assessment can help identify the cause and guide treatment.",
+      },
+      {
+        heading: "Common Causes of Persistent Back Pain",
+        body: "Possible causes include muscle and ligament strain, a herniated disc, spinal stenosis, degenerative changes, and irritation or compression of spinal nerves. Pain that travels from the back into the buttock or leg may be associated with nerve irritation, but an examination is needed to establish the likely cause.",
+      },
+      {
+        heading: "Warning Signs That Need Medical Attention",
+        body: "Persistent pain, recurring episodes, tingling, numbness, or pain radiating into the leg should be assessed when symptoms continue or worsen. New bladder or bowel control problems, numbness around the groin or saddle area, or rapidly worsening leg weakness require emergency medical assessment. Do not delay care if these symptoms develop.",
+      },
+      {
+        heading: "How Is Chronic Back Pain Diagnosed?",
+        body: "A doctor may review your medical history, pain pattern, mobility, muscle strength, sensation, and reflexes. Imaging such as an X-ray or MRI may be recommended when clinically indicated, particularly when nerve compression, a significant injury, or another specific spinal condition is suspected. Not every patient with back pain needs imaging.",
+      },
+      {
+        heading: "Back Pain Treatment Without and With Surgery",
+        body: "Treatment may include guided exercises, physiotherapy, changes to daily activities, and medication prescribed according to your condition. Selected patients may benefit from other interventions after specialist evaluation. Surgery may be considered for particular spinal conditions when symptoms, examination, imaging findings, and response to non-surgical treatment support it. The appropriate option depends on the diagnosis rather than pain duration alone.",
+      },
+      {
+        heading: "When Should You Consult a Back Pain Specialist?",
+        body: "Consider a consultation if back pain lasts for several weeks, repeatedly returns, travels down your leg, or interferes with walking, work, or sleep. If you are searching for an orthopedic doctor for chronic back pain or a slipped disc consultation in Saharanpur, SCHARI can help you arrange an assessment to discuss the possible cause and appropriate next steps.",
+      },
+    ],
+    faqs: [
+      {
+        question: "Which doctor should I consult for chronic back pain in Saharanpur?",
+        answer:
+          "A doctor experienced in musculoskeletal and spinal conditions can evaluate persistent back pain and determine whether further specialist care is needed. You can book an orthopedic consultation at SCHARI in Saharanpur to discuss your symptoms and treatment options.",
+      },
+      {
+        question: "Can a slipped disc be treated without surgery?",
+        answer:
+          "Many herniated discs improve with appropriate non-surgical care, which may include activity modification, physiotherapy, and prescribed medication. Surgery may be considered for selected patients with persistent disabling symptoms or significant neurological problems.",
+      },
+      {
+        question: "When is back pain serious enough to see a doctor?",
+        answer:
+          "Seek medical evaluation for persistent or worsening pain, pain spreading down a leg, or numbness and weakness. New bladder or bowel problems, saddle-area numbness, or rapidly worsening weakness require emergency assessment.",
+      },
+      {
+        question: "Do I need an MRI for back pain?",
+        answer:
+          "Not always. An MRI may be recommended when the examination suggests nerve compression or another condition that requires further investigation. Your doctor can determine whether imaging is appropriate.",
+      },
+      {
+        question: "What is the cost of back pain treatment in Saharanpur?",
+        answer:
+          "Costs depend on the cause of the pain and whether treatment involves consultation, investigations, physiotherapy, medication, procedures, or surgery. Contact SCHARI for current charges and an estimate based on your needs.",
+      },
+    ],
+  },
+
+  {
+    id: "04",
+    slug: "hip-shoulder-pain",
+    track: "Joint Care",
+    title: "Hip & Shoulder Joint Pain",
+    keywords: [
+  "hip pain doctor Saharanpur",
+  "shoulder pain treatment Saharanpur",
+  "frozen shoulder treatment",
+  "hip replacement Saharanpur",
+],
+    description:
+      "Diagnosis and treatment options for persistent hip pain, shoulder pain, stiffness, and joint movement problems.",
+    img: "https://images.unsplash.com/photo-1624716472114-a7c5f18ac832?q=80&w=1172&auto=format&fit=crop",
+    symptoms: [
+      "Pain in the groin, hip, or buttock",
+      "Shoulder pain when lifting the arm",
+      "Night pain that disturbs sleep",
+      "Stiffness that limits daily tasks",
+      "Clicking, catching, or locking sensation",
+    ],
+    content: [
+      {
+        heading: "What Causes Hip and Shoulder Joint Pain?",
+        body: "Hip and shoulder pain can affect walking, lifting, dressing, sleeping, and other daily activities. Hip pain may be associated with osteoarthritis, tendon problems, or other joint conditions. Shoulder pain may arise from rotator cuff problems, frozen shoulder, bursitis, or repetitive strain. An accurate diagnosis helps determine the most suitable treatment.",
+      },
+      {
+        heading: "Symptoms That May Indicate a Joint Problem",
+        body: "Hip problems may cause groin pain, stiffness, discomfort while walking, or difficulty putting on shoes and socks. Shoulder conditions may cause pain when raising the arm, restricted movement, weakness, or discomfort at night. Persistent symptoms or a progressive loss of movement should be assessed by a medical professional.",
+      },
+      {
+        heading: "How Are Hip and Shoulder Conditions Diagnosed?",
+        body: "An orthopedic specialist may ask about the location and duration of pain, examine joint movement and strength, and review your medical history. X-rays may help identify arthritis or bone changes, while ultrasound or MRI may be considered when tendon, ligament, or other soft-tissue problems are suspected.",
+      },
+      {
+        heading: "Non-Surgical Treatment for Hip and Shoulder Pain",
+        body: "Depending on the diagnosis, treatment may include physiotherapy, guided exercises, activity modification, and medication prescribed by a doctor. Selected patients may be considered for injections when appropriate. Treatment is individualized, and not every joint condition requires surgery.",
+      },
+      {
+        heading: "When Are Arthroscopy or Joint Replacement Considered?",
+        body: "Arthroscopy may be suitable for certain joint conditions, depending on the structure affected and the expected benefit. Joint replacement may be considered when advanced arthritis causes substantial pain and functional limitations despite appropriate non-surgical treatment. Your orthopedic specialist can explain the potential benefits, risks, alternatives, and recovery requirements for your specific condition.",
+      },
+      {
+        heading: "When Should You Consult a Hip or Shoulder Specialist?",
+        body: "Consider an orthopedic consultation if joint pain persists, repeatedly disturbs sleep, limits walking or arm movement, or fails to improve with appropriate initial care. If you are looking for a hip pain or shoulder pain doctor in Saharanpur, SCHARI can help arrange an orthopedic evaluation to identify the cause and discuss your treatment options.",
+      },
+    ],
+    faqs: [
+      {
+        question: "Which doctor should I consult for hip or shoulder pain in Saharanpur?",
+        answer:
+          "An orthopedic specialist can evaluate persistent hip or shoulder pain, assess joint movement, and recommend appropriate investigations or treatment. You can contact SCHARI in Saharanpur to arrange a consultation.",
+      },
+      {
+        question: "Can frozen shoulder be treated without surgery?",
+        answer:
+          "Many cases of frozen shoulder are treated without surgery through guided exercises, physiotherapy, pain management, and other clinician-recommended options. The plan depends on pain, stiffness, and the stage of the condition.",
+      },
+      {
+        question: "When might I need hip or shoulder replacement surgery?",
+        answer:
+          "Joint replacement may be considered when advanced joint damage causes persistent pain and significant limitations despite appropriate non-surgical care. The decision depends on the diagnosis, examination, imaging, overall health, and individual needs.",
+      },
+      {
+        question: "What causes shoulder pain when lifting my arm?",
+        answer:
+          "Possible causes include rotator cuff problems, bursitis, frozen shoulder, tendon irritation, or joint conditions. An examination can help identify the likely cause and guide treatment.",
+      },
+      {
+        question: "What is the cost of hip or shoulder treatment in Saharanpur?",
+        answer:
+          "Costs depend on the condition and the treatment required, including consultation, imaging, physiotherapy, medication, injections, or surgery. Contact SCHARI for current charges and a personalized estimate.",
+      },
+    ],
+  },
+],
     why: {
       title: "Why Choose Our Orthopedic Unit",
       subtitle: "Expert joint and bone care, planned around your recovery",
@@ -270,6 +452,7 @@ export const servicesData: ServiceItem[] = [
     slug: "gynecology",
     title: "Gynecology",
     subtitle: "Maternity & Women's Wellness",
+      doctorSlug: "dr-jaaveria-fatimah", 
     description:
       "Specialized, compassionate care for women's health, wellness, and maternity services across all life stages.",
     discount: "15% OFF",
@@ -495,6 +678,7 @@ export const servicesData: ServiceItem[] = [
     slug: "pediatrics",
     title: "Pediatrics",
     subtitle: "Child Healthcare & Immunization",
+    doctorSlug: "dr-surekha-meena", 
     description: "Expert medical care tailored for infants, children, and adolescents in a kid-friendly, comforting environment.",
     discount: "Free Consultation",
     icon: Baby,
@@ -719,6 +903,7 @@ testimonials: [],
     slug: "general-physician",
     title: "General Physician",
     subtitle: "Primary Care & Preventative Health",
+     doctorSlug: "dr-rajendran-pillai",
     description: "Primary care, comprehensive health screenings, and preventative medicine for chronic and acute illnesses.",
     discount: "10% OFF",
     icon: Stethoscope,
@@ -952,6 +1137,7 @@ testimonials: [],
     slug: "general-surgery",
     title: "General Surgery",
     subtitle: "Minimally Invasive Procedures",
+     doctorSlug: "dr-ratnakar",
     description: "Advanced surgical procedures utilizing state-of-the-art minimally invasive and laparoscopic techniques.",
     discount: "20% OFF",
     icon: Activity,
@@ -1189,210 +1375,216 @@ testimonials: [],
       }
     ]
   },
-  {
-    id: 6,
-    slug: "urology",
-    title: "Urology",
-    subtitle: "Advanced Urological Care",
-    description: "Specialized urological treatments utilizing minimally invasive endoscopic and laser stone removal technologies.",
-    discount: "15% OFF",
-    icon: Activity,
-    images: [
-      'https://images.unsplash.com/photo-1559757175-9e351c9a1301?w=600&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1559757175-0828e13882ed?w=600&auto=format&fit=crop'
-    ],
-    tags: ["Kidney Stones", "Prostate Care", "Laser Surgery"],
-    doctor: {
-      name: "Dr. Puneet Singhal, M.Ch",
-      title: "Consultant Urologist & Transplant Surgeon",
-      qualification: "MS Surgery, M.Ch Urology (AIIMS)",
-      experience: "12+ Years Urological Care",
-      philosophy: "Advanced laser solutions for kidney stones and prostate health with painless recovery.",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop",
-      badge: "UROLOGY SPECIALIST"
-    },
-    problems: [
-    {
-    id: "01",
-    slug: "kidney-stones",
-    track: "Endourology",
-    title: "Kidney Stones (RIRS/PCNL)",
-    description:
-      "Laser-assisted stone treatment through minimally invasive techniques.",
-    img: "https://plus.unsplash.com/premium_photo-1681967162693-4ad328adef4f?q=80&w=1152&auto=format&fit=crop",
-    symptoms: [
-      "Severe pain in the side or back that comes in waves",
-      "Pain that spreads to the lower abdomen or groin",
-      "Blood in the urine",
-      "Nausea or vomiting",
-      "Burning or frequent urination",
-    ],
-    content: [
-      {
-        heading: "What Are Kidney Stones?",
-        body: "Kidney stones are hard mineral deposits that form inside the kidneys. They may stay in the kidney or travel down the urinary tract, causing pain, bleeding, or blockage.",
-      },
-      {
-        heading: "Common Causes",
-        body: "Not drinking enough water, a diet high in salt or certain foods, family history, some medical conditions, and repeated urinary infections can all contribute to stone formation.",
-      },
-      {
-        heading: "Symptoms You Should Not Ignore",
-        body: "Severe pain with fever or chills, vomiting that does not stop, or being unable to pass urine needs urgent medical attention, as it may signal infection or blockage.",
-      },
-      {
-        heading: "How Are Kidney Stones Diagnosed?",
-        body: "A urologist reviews your symptoms and may advise urine tests, an ultrasound, or a CT scan to find the size and location of the stone.",
-      },
-      {
-        heading: "Treatment Options",
-        body: "Small stones may pass with fluids and medicines. Larger or troublesome stones may need procedures such as shock wave lithotripsy, RIRS (retrograde intrarenal surgery) using a flexible scope and laser, or PCNL (percutaneous nephrolithotomy) for large stones. Your urologist will advise what suits you.",
-      },
-      {
-        heading: "Preventing Stones from Coming Back",
-        body: "Drinking plenty of water, limiting salt, and following dietary advice based on your stone type can lower the chance of recurrence. Follow-up tests may be advised.",
-      },
-    ],
+  // {
+  //   id: 6,
+  //   slug: "urology",
+  //   title: "Urology",
+  //   subtitle: "Advanced Urological Care",
+  //   description: "Specialized urological treatments utilizing minimally invasive endoscopic and laser stone removal technologies.",
+
+  //    doctorSlug: "dr-ratnakar",
     
-  },
-  {
-    id: "02",
-    slug: "bph-prostate-health",
-    track: "Prostate",
-    title: "BPH & Prostate Health",
-    description:
-      "Evaluation and treatment options for benign prostate enlargement.",
-    img: "https://plus.unsplash.com/premium_photo-1681967162693-4ad328adef4f?q=80&w=1152&auto=format&fit=crop",
-    symptoms: [
-      "Weak or slow urine stream",
-      "Needing to urinate often, especially at night",
-      "Feeling the bladder is not completely empty",
-      "Difficulty starting urination",
-      "Sudden urge to urinate",
-    ],
-    content: [
-      {
-        heading: "What Is BPH?",
-        body: "Benign prostatic hyperplasia (BPH) is a non-cancerous enlargement of the prostate gland that commonly occurs as men get older. It can press on the urine pipe and cause urinary symptoms.",
-      },
-      {
-        heading: "Why Does It Matter?",
-        body: "Untreated BPH can lead to repeated urinary infections, bladder stones, or the sudden inability to pass urine. Treating symptoms early improves comfort and protects the bladder and kidneys.",
-      },
-      {
-        heading: "When to Seek Urgent Care",
-        body: "If you cannot pass urine at all, have severe lower abdominal pain, or see blood in the urine with fever, get medical help immediately.",
-      },
-      {
-        heading: "How Is BPH Evaluated?",
-        body: "A urologist will ask about symptoms and examine you. Tests may include urine tests, a PSA blood test, an ultrasound, and a urine flow test.",
-      },
-      {
-        heading: "Treatment Options",
-        body: "Treatment depends on how much the symptoms bother you. Options include lifestyle changes, medicines to relax the prostate or reduce its size, and surgical procedures such as TURP or laser enucleation when medicines are not enough.",
-      },
-    ],
-  },
-  {
-    id: "03",
-    slug: "urinary-tract-problems",
-    track: "Urinary Health",
-    title: "Urinary Tract Problems",
-    description:
-      "Evaluation of urinary discomfort, frequent urination, and other urinary symptoms.",
-    img: "https://plus.unsplash.com/premium_photo-1681967162693-4ad328adef4f?q=80&w=1152&auto=format&fit=crop",
-    symptoms: [
-      "Burning sensation while urinating",
-      "Frequent or urgent need to urinate",
-      "Cloudy or foul-smelling urine",
-      "Lower abdominal or pelvic pain",
-      "Blood in the urine",
-    ],
-    content: [
-      {
-        heading: "What Are Urinary Tract Problems?",
-        body: "These include infections of the bladder or kidneys, bladder irritation, difficulty passing urine, and other conditions affecting how urine is stored and passed.",
-      },
-      {
-        heading: "Common Causes",
-        body: "Bacterial infection is a common cause. Others include kidney stones, an enlarged prostate, narrowing of the urine pipe, diabetes, and not drinking enough fluids.",
-      },
-      {
-        heading: "Symptoms You Should Not Ignore",
-        body: "Fever with chills, pain in the back or side, vomiting, or blood in the urine needs prompt assessment, as the infection may have reached the kidneys.",
-      },
-      {
-        heading: "How Is the Cause Found?",
-        body: "A urologist may order a urine test and culture, blood tests, an ultrasound, or other tests to find the cause, especially if infections keep coming back.",
-      },
-      {
-        heading: "Treatment and Prevention",
-        body: "Infections are usually treated with antibiotics chosen after testing. Drinking enough water, not holding urine for long, and treating underlying causes help prevent recurrence.",
-      },
-    ],
-  },
-  {
-    id: "04",
-    slug: "prostate-enlargement",
-    track: "Men’s Health",
-    title: "Prostate Enlargement",
-    description:
-      "Assessment and management options for urinary symptoms associated with an enlarged prostate.",
-    img: "https://plus.unsplash.com/premium_photo-1681967162693-4ad328adef4f?q=80&w=1152&auto=format&fit=crop",
-    symptoms: [
-      "Waking up several times at night to urinate",
-      "Urine stream that stops and starts",
-      "Dribbling after urinating",
-      "Straining to pass urine",
-      "Repeated urinary infections",
-    ],
-    content: [
-      {
-        heading: "Understanding Prostate Enlargement",
-        body: "The prostate gland sits below the bladder and surrounds the urine pipe. As it grows with age, it can narrow the pipe and make urination difficult.",
-      },
-      {
-        heading: "Who Is at Risk?",
-        body: "Prostate enlargement is very common in men over 50 and becomes more common with age. A family history may also increase the chance of developing symptoms.",
-      },
-      {
-        heading: "Diagnostic Evaluation",
-        body: "Evaluation may include a symptom score, physical examination, urine test, PSA blood test, ultrasound, and a urine flow test. A PSA test is discussed with your doctor along with its benefits and limits.",
-      },
-      {
-        heading: "Management Options",
-        body: "Mild symptoms may be managed with lifestyle changes such as reducing evening fluids and caffeine. Medicines are commonly used for moderate symptoms, and surgery such as TURP or laser procedures may be considered when other treatment is not enough.",
-      },
-      {
-        heading: "When Should You Consult a Urologist?",
-        body: "See a urologist if urinary symptoms affect your sleep or daily life, you have repeated infections, or you notice blood in the urine. Inability to pass urine is an emergency.",
-      },
-    ],
-  },
-    ],
-    faqs: [
-      {
-        question: "What conditions does a urologist treat?",
-        answer: "Urologists treat conditions involving the urinary tract and male reproductive system, including kidney stones, prostate problems, and urinary difficulties."
-      },
-      {
-        question: "What are the common symptoms of kidney stones?",
-        answer: "Symptoms may include severe pain in the side or back, blood in the urine, nausea, or painful urination. Severe pain with fever or difficulty passing urine requires urgent medical attention."
-      },
-      {
-        question: "Do all kidney stones require surgery?",
-        answer: "No. Treatment depends on the stone's size, location, symptoms, and complications. Some stones pass naturally, while others need medical or procedural treatment."
-      },
-      {
-        question: "What is an enlarged prostate?",
-        answer: "Benign prostate enlargement can cause frequent urination, a weak urine stream, or difficulty emptying the bladder. A urologist can assess symptoms and discuss treatment options."
-      },
-      {
-        question: "When should I consult a urologist?",
-        answer: "Consider a consultation for recurring urinary symptoms, blood in the urine, suspected kidney stones, or persistent difficulty passing urine. Inability to urinate requires urgent medical care."
-      }
-    ]
-  }
+
+    
+    
+  //   discount: "15% OFF",
+  //   icon: Activity,
+  //   images: [
+  //     'https://images.unsplash.com/photo-1559757175-9e351c9a1301?w=600&auto=format&fit=crop',
+  //     'https://images.unsplash.com/photo-1559757175-0828e13882ed?w=600&auto=format&fit=crop'
+  //   ],
+  //   tags: ["Kidney Stones", "Prostate Care", "Laser Surgery"],
+  //   doctor: {
+  //     name: "Dr. Puneet Singhal, M.Ch",
+  //     title: "Consultant Urologist & Transplant Surgeon",
+  //     qualification: "MS Surgery, M.Ch Urology (AIIMS)",
+  //     experience: "12+ Years Urological Care",
+  //     philosophy: "Advanced laser solutions for kidney stones and prostate health with painless recovery.",
+  //     image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop",
+  //     badge: "UROLOGY SPECIALIST"
+  //   },
+  //   problems: [
+  //   {
+  //   id: "01",
+  //   slug: "kidney-stones",
+  //   track: "Endourology",
+  //   title: "Kidney Stones (RIRS/PCNL)",
+  //   description:
+  //     "Laser-assisted stone treatment through minimally invasive techniques.",
+  //   img: "https://plus.unsplash.com/premium_photo-1681967162693-4ad328adef4f?q=80&w=1152&auto=format&fit=crop",
+  //   symptoms: [
+  //     "Severe pain in the side or back that comes in waves",
+  //     "Pain that spreads to the lower abdomen or groin",
+  //     "Blood in the urine",
+  //     "Nausea or vomiting",
+  //     "Burning or frequent urination",
+  //   ],
+  //   content: [
+  //     {
+  //       heading: "What Are Kidney Stones?",
+  //       body: "Kidney stones are hard mineral deposits that form inside the kidneys. They may stay in the kidney or travel down the urinary tract, causing pain, bleeding, or blockage.",
+  //     },
+  //     {
+  //       heading: "Common Causes",
+  //       body: "Not drinking enough water, a diet high in salt or certain foods, family history, some medical conditions, and repeated urinary infections can all contribute to stone formation.",
+  //     },
+  //     {
+  //       heading: "Symptoms You Should Not Ignore",
+  //       body: "Severe pain with fever or chills, vomiting that does not stop, or being unable to pass urine needs urgent medical attention, as it may signal infection or blockage.",
+  //     },
+  //     {
+  //       heading: "How Are Kidney Stones Diagnosed?",
+  //       body: "A urologist reviews your symptoms and may advise urine tests, an ultrasound, or a CT scan to find the size and location of the stone.",
+  //     },
+  //     {
+  //       heading: "Treatment Options",
+  //       body: "Small stones may pass with fluids and medicines. Larger or troublesome stones may need procedures such as shock wave lithotripsy, RIRS (retrograde intrarenal surgery) using a flexible scope and laser, or PCNL (percutaneous nephrolithotomy) for large stones. Your urologist will advise what suits you.",
+  //     },
+  //     {
+  //       heading: "Preventing Stones from Coming Back",
+  //       body: "Drinking plenty of water, limiting salt, and following dietary advice based on your stone type can lower the chance of recurrence. Follow-up tests may be advised.",
+  //     },
+  //   ],
+    
+  // },
+  // {
+  //   id: "02",
+  //   slug: "bph-prostate-health",
+  //   track: "Prostate",
+  //   title: "BPH & Prostate Health",
+  //   description:
+  //     "Evaluation and treatment options for benign prostate enlargement.",
+  //   img: "https://plus.unsplash.com/premium_photo-1681967162693-4ad328adef4f?q=80&w=1152&auto=format&fit=crop",
+  //   symptoms: [
+  //     "Weak or slow urine stream",
+  //     "Needing to urinate often, especially at night",
+  //     "Feeling the bladder is not completely empty",
+  //     "Difficulty starting urination",
+  //     "Sudden urge to urinate",
+  //   ],
+  //   content: [
+  //     {
+  //       heading: "What Is BPH?",
+  //       body: "Benign prostatic hyperplasia (BPH) is a non-cancerous enlargement of the prostate gland that commonly occurs as men get older. It can press on the urine pipe and cause urinary symptoms.",
+  //     },
+  //     {
+  //       heading: "Why Does It Matter?",
+  //       body: "Untreated BPH can lead to repeated urinary infections, bladder stones, or the sudden inability to pass urine. Treating symptoms early improves comfort and protects the bladder and kidneys.",
+  //     },
+  //     {
+  //       heading: "When to Seek Urgent Care",
+  //       body: "If you cannot pass urine at all, have severe lower abdominal pain, or see blood in the urine with fever, get medical help immediately.",
+  //     },
+  //     {
+  //       heading: "How Is BPH Evaluated?",
+  //       body: "A urologist will ask about symptoms and examine you. Tests may include urine tests, a PSA blood test, an ultrasound, and a urine flow test.",
+  //     },
+  //     {
+  //       heading: "Treatment Options",
+  //       body: "Treatment depends on how much the symptoms bother you. Options include lifestyle changes, medicines to relax the prostate or reduce its size, and surgical procedures such as TURP or laser enucleation when medicines are not enough.",
+  //     },
+  //   ],
+  // },
+  // {
+  //   id: "03",
+  //   slug: "urinary-tract-problems",
+  //   track: "Urinary Health",
+  //   title: "Urinary Tract Problems",
+  //   description:
+  //     "Evaluation of urinary discomfort, frequent urination, and other urinary symptoms.",
+  //   img: "https://plus.unsplash.com/premium_photo-1681967162693-4ad328adef4f?q=80&w=1152&auto=format&fit=crop",
+  //   symptoms: [
+  //     "Burning sensation while urinating",
+  //     "Frequent or urgent need to urinate",
+  //     "Cloudy or foul-smelling urine",
+  //     "Lower abdominal or pelvic pain",
+  //     "Blood in the urine",
+  //   ],
+  //   content: [
+  //     {
+  //       heading: "What Are Urinary Tract Problems?",
+  //       body: "These include infections of the bladder or kidneys, bladder irritation, difficulty passing urine, and other conditions affecting how urine is stored and passed.",
+  //     },
+  //     {
+  //       heading: "Common Causes",
+  //       body: "Bacterial infection is a common cause. Others include kidney stones, an enlarged prostate, narrowing of the urine pipe, diabetes, and not drinking enough fluids.",
+  //     },
+  //     {
+  //       heading: "Symptoms You Should Not Ignore",
+  //       body: "Fever with chills, pain in the back or side, vomiting, or blood in the urine needs prompt assessment, as the infection may have reached the kidneys.",
+  //     },
+  //     {
+  //       heading: "How Is the Cause Found?",
+  //       body: "A urologist may order a urine test and culture, blood tests, an ultrasound, or other tests to find the cause, especially if infections keep coming back.",
+  //     },
+  //     {
+  //       heading: "Treatment and Prevention",
+  //       body: "Infections are usually treated with antibiotics chosen after testing. Drinking enough water, not holding urine for long, and treating underlying causes help prevent recurrence.",
+  //     },
+  //   ],
+  // },
+  // {
+  //   id: "04",
+  //   slug: "prostate-enlargement",
+  //   track: "Men’s Health",
+  //   title: "Prostate Enlargement",
+  //   description:
+  //     "Assessment and management options for urinary symptoms associated with an enlarged prostate.",
+  //   img: "https://plus.unsplash.com/premium_photo-1681967162693-4ad328adef4f?q=80&w=1152&auto=format&fit=crop",
+  //   symptoms: [
+  //     "Waking up several times at night to urinate",
+  //     "Urine stream that stops and starts",
+  //     "Dribbling after urinating",
+  //     "Straining to pass urine",
+  //     "Repeated urinary infections",
+  //   ],
+  //   content: [
+  //     {
+  //       heading: "Understanding Prostate Enlargement",
+  //       body: "The prostate gland sits below the bladder and surrounds the urine pipe. As it grows with age, it can narrow the pipe and make urination difficult.",
+  //     },
+  //     {
+  //       heading: "Who Is at Risk?",
+  //       body: "Prostate enlargement is very common in men over 50 and becomes more common with age. A family history may also increase the chance of developing symptoms.",
+  //     },
+  //     {
+  //       heading: "Diagnostic Evaluation",
+  //       body: "Evaluation may include a symptom score, physical examination, urine test, PSA blood test, ultrasound, and a urine flow test. A PSA test is discussed with your doctor along with its benefits and limits.",
+  //     },
+  //     {
+  //       heading: "Management Options",
+  //       body: "Mild symptoms may be managed with lifestyle changes such as reducing evening fluids and caffeine. Medicines are commonly used for moderate symptoms, and surgery such as TURP or laser procedures may be considered when other treatment is not enough.",
+  //     },
+  //     {
+  //       heading: "When Should You Consult a Urologist?",
+  //       body: "See a urologist if urinary symptoms affect your sleep or daily life, you have repeated infections, or you notice blood in the urine. Inability to pass urine is an emergency.",
+  //     },
+  //   ],
+  // },
+  //   ],
+  //   faqs: [
+  //     {
+  //       question: "What conditions does a urologist treat?",
+  //       answer: "Urologists treat conditions involving the urinary tract and male reproductive system, including kidney stones, prostate problems, and urinary difficulties."
+  //     },
+  //     {
+  //       question: "What are the common symptoms of kidney stones?",
+  //       answer: "Symptoms may include severe pain in the side or back, blood in the urine, nausea, or painful urination. Severe pain with fever or difficulty passing urine requires urgent medical attention."
+  //     },
+  //     {
+  //       question: "Do all kidney stones require surgery?",
+  //       answer: "No. Treatment depends on the stone's size, location, symptoms, and complications. Some stones pass naturally, while others need medical or procedural treatment."
+  //     },
+  //     {
+  //       question: "What is an enlarged prostate?",
+  //       answer: "Benign prostate enlargement can cause frequent urination, a weak urine stream, or difficulty emptying the bladder. A urologist can assess symptoms and discuss treatment options."
+  //     },
+  //     {
+  //       question: "When should I consult a urologist?",
+  //       answer: "Consider a consultation for recurring urinary symptoms, blood in the urine, suspected kidney stones, or persistent difficulty passing urine. Inability to urinate requires urgent medical care."
+  //     }
+  //   ]
+  // }
 ];
 
 export function getServiceBySlug(slug: string) {

@@ -249,28 +249,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* TEAM */}
-      <section className="mx-auto max-w-7xl px-5 py-20 lg:px-8">
-        <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">
-          Meet our doctors
-        </h2>
-        <div className="mt-10 grid grid-cols-2 gap-6 md:grid-cols-4">
-          {CONFIG.team.map((d, i) => (
-            <figure key={i}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={img(d.image, 600)}
-                alt={d.name}
-                className="aspect-[3/4] w-full rounded-2xl object-cover"
-              />
-              <figcaption className="mt-3">
-                <p className="font-semibold">{d.name}</p>
-                <p className="text-sm text-[#35545A]">{d.role}</p>
-              </figcaption>
-            </figure>
-          ))}
-        </div>
-      </section>
+  
 
       {/* CTA */}
       <section className="relative isolate overflow-hidden">

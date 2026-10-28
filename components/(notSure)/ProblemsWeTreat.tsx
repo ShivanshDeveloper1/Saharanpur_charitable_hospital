@@ -10,6 +10,7 @@ interface ProblemItem {
   id: string;
   track: string;
   title: string;
+  slug:string;
   description: string;
   content?: ProblemContent[];
 }
@@ -63,7 +64,7 @@ const displayProblems = problems;
           {displayProblems.map((item, index) => {
             const isFeatured = index === 1;
             const cardImage = defaultImages[index % defaultImages.length];
-            const categorySlug = createSlug(item.title);
+            const categorySlug = createSlug(item.slug);
             const destinationUrl = `/services/${serviceSlug}/${categorySlug}`;
 
             return (

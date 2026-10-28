@@ -10,10 +10,7 @@ interface SpecialtyPageProps {
 }
 
 export default function SpecialtyPage({ service, problem }: SpecialtyPageProps) {
-
-
-const [isAboutExpanded, setIsAboutExpanded] = useState(false);
-
+  const [isAboutExpanded, setIsAboutExpanded] = useState(false);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -23,6 +20,15 @@ const [isAboutExpanded, setIsAboutExpanded] = useState(false);
     service: problem.title,
     message: "",
   });
+
+  // Optional service-level data (may be missing for some services)
+  const why = service.why;
+  const steps = service.steps;
+  const testimonials = service.testimonials ?? [];
+  const doctor = service.doctor;
+
+  // Use problem-specific FAQs if they exist, otherwise fall back to service FAQs
+  const faqs = problem.faqs?.length ? problem.faqs : service.faqs ?? [];
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
@@ -92,61 +98,51 @@ const [isAboutExpanded, setIsAboutExpanded] = useState(false);
               ))}
             </nav>
 
-    {/* ABOUT / STEP BY STEP CONTENT */}
+            {/* ABOUT / STEP BY STEP CONTENT */}
+            <section className="space-y-8">
+              <h2 className="text-2xl md:text-3xl font-semibold text-slate-900">
+                About {problem.title}
+              </h2>
 
+              <div className="space-y-8">
+                {problem.content.map((section, index) => (
+                  <div
+                    key={section.heading}
+                    className={`flex gap-4 ${
+                      !isAboutExpanded && index >= 2 ? "hidden" : ""
+                    }`}
+                  >
+                    <div className="shrink-0 w-10 h-10 rounded-full bg-pink-100 text-pink-600 font-bold flex items-center justify-center">
+                      {index + 1}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <h3 className="text-xl font-semibold text-slate-900 mb-2">
+                        {section.heading}
+                      </h3>
+                      <p className="text-slate-600 leading-relaxed">{section.body}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
 
-<section className="space-y-8">
-  <h2 className="text-2xl md:text-3xl font-semibold text-slate-900">
-    About {problem.title}
-  </h2>
-
-  <div className="space-y-8">
-    {problem.content.map((section, index) => (
-      <div
-        key={section.heading}
-        className={`flex gap-4 ${
-          !isAboutExpanded && index >= 2 ? "hidden" : ""
-        }`}
-      >
-        <div className="shrink-0 w-10 h-10 rounded-full bg-pink-100 text-pink-600 font-bold flex items-center justify-center">
-          {index + 1}
-        </div>
-
-        <div className="min-w-0 flex-1">
-          <h3 className="text-xl font-semibold text-slate-900 mb-2">
-            {section.heading}
-          </h3>
-
-          <p className="text-slate-600 leading-relaxed">
-            {section.body}
-          </p>
-        </div>
-      </div>
-    ))}
-  </div>
-
-  {problem.content.length > 2 && (
-  
-<button
-  type="button"
-  onClick={() => setIsAboutExpanded((prev) => !prev)}
-  aria-expanded={isAboutExpanded}
-  className="inline-flex items-center gap-2 rounded-full bg-pink-600 px-6 py-3 text-sm font-semibold text-white shadow-md shadow-pink-600/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-pink-700 hover:shadow-lg hover:shadow-pink-600/30 active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-offset-2"
->
-  {isAboutExpanded ? "Read Less" : "Read More"}
-
-  <span
-    className={`text-base transition-transform duration-300 ${
-      isAboutExpanded ? "rotate-180" : ""
-    }`}
-  >
-    ↓
-  </span>
-</button>
-
-  )}
-</section>
-
+              {problem.content.length > 2 && (
+                <button
+                  type="button"
+                  onClick={() => setIsAboutExpanded((prev) => !prev)}
+                  aria-expanded={isAboutExpanded}
+                  className="inline-flex items-center gap-2 rounded-full bg-pink-600 px-6 py-3 text-sm font-semibold text-white shadow-md shadow-pink-600/20 transition-all duration-300 hover:-translate-y-0.5 hover:bg-pink-700 hover:shadow-lg hover:shadow-pink-600/30 active:translate-y-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-pink-500 focus-visible:ring-offset-2"
+                >
+                  {isAboutExpanded ? "Read Less" : "Read More"}
+                  <span
+                    className={`text-base transition-transform duration-300 ${
+                      isAboutExpanded ? "rotate-180" : ""
+                    }`}
+                  >
+                    ↓
+                  </span>
+                </button>
+              )}
+            </section>
 
             {/* SYMPTOMS */}
             <section className="bg-white rounded-3xl p-6 md:p-8 border border-slate-100 shadow-sm">
@@ -167,138 +163,146 @@ const [isAboutExpanded, setIsAboutExpanded] = useState(false);
             </section>
 
             {/* WHY CHOOSE US */}
-            <section>
-              <h2 className="text-2xl md:text-3xl font-semibold text-slate-900">
-                {service.why.title}
-              </h2>
-              <p className="text-slate-500 mt-2 mb-6">{service.why.subtitle}</p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {service.why.points.map((point, i) => (
-                  <div
-                    key={point}
-                    className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm"
-                  >
-                    <div className="text-pink-500 font-bold text-sm mb-2">
-                      0{i + 1}
+            {why && (
+              <section>
+                <h2 className="text-2xl md:text-3xl font-semibold text-slate-900">
+                  {why.title}
+                </h2>
+                <p className="text-slate-500 mt-2 mb-6">{why.subtitle}</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {why.points.map((point, i) => (
+                    <div
+                      key={point}
+                      className="bg-white rounded-2xl p-5 border border-slate-100 shadow-sm"
+                    >
+                      <div className="text-pink-500 font-bold text-sm mb-2">0{i + 1}</div>
+                      <p className="text-slate-700 text-sm leading-relaxed">{point}</p>
                     </div>
-                    <p className="text-slate-700 text-sm leading-relaxed">{point}</p>
-                  </div>
-                ))}
-              </div>
-            </section>
+                  ))}
+                </div>
+              </section>
+            )}
 
             {/* 3 EASY STEPS */}
-            <section>
-              <h2 className="text-2xl md:text-3xl font-semibold text-slate-900 mb-8">
-                {service.steps.title}
-              </h2>
-              <ol className="space-y-4">
-                {service.steps.items.map((step, i) => (
-                  <li
-                    key={step.title}
-                    className="flex gap-4 bg-white rounded-2xl p-5 border border-slate-100"
-                  >
-                    <div className="shrink-0 w-12 h-12 rounded-2xl bg-[#f472b6] text-white font-bold flex items-center justify-center">
-                      {i + 1}
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-slate-900">{step.title}</h3>
-                      <p className="text-slate-600 text-sm mt-1 leading-relaxed">
-                        {step.description}
-                      </p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </section>
+            {steps && (
+              <section>
+                <h2 className="text-2xl md:text-3xl font-semibold text-slate-900 mb-8">
+                  {steps.title}
+                </h2>
+                <ol className="space-y-4">
+                  {steps.items.map((step, i) => (
+                    <li
+                      key={step.title}
+                      className="flex gap-4 bg-white rounded-2xl p-5 border border-slate-100"
+                    >
+                      <div className="shrink-0 w-12 h-12 rounded-2xl bg-[#f472b6] text-white font-bold flex items-center justify-center">
+                        {i + 1}
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-slate-900">{step.title}</h3>
+                        <p className="text-slate-600 text-sm mt-1 leading-relaxed">
+                          {step.description}
+                        </p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            )}
 
             {/* TESTIMONIALS */}
-            <section>
-              <h2 className="text-2xl md:text-3xl font-semibold text-slate-900 mb-8">
-                Patient Stories
-              </h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {service.testimonials.map((t) => (
-                  <figure
-                    key={t.name}
-                    className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"
-                  >
-                    <div className="text-amber-400 mb-3" aria-label={`${t.rating} out of 5 stars`}>
-                      {"★".repeat(t.rating)}
-                      <span className="text-slate-200">{"★".repeat(5 - t.rating)}</span>
-                    </div>
-                    <blockquote className="text-slate-600 text-sm leading-relaxed">
-                      “{t.text}”
-                    </blockquote>
-                    <figcaption className="mt-4 text-sm font-semibold text-slate-900">
-                      {t.name}
-                      <span className="font-normal text-slate-500"> · {t.location}</span>
-                    </figcaption>
-                  </figure>
-                ))}
-              </div>
-            </section>
+            {testimonials.length > 0 && (
+              <section>
+                <h2 className="text-2xl md:text-3xl font-semibold text-slate-900 mb-8">
+                  Patient Stories
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {testimonials.map((t) => (
+                    <figure
+                      key={t.name}
+                      className="bg-white rounded-2xl p-6 border border-slate-100 shadow-sm"
+                    >
+                      <div className="text-amber-400 mb-3" aria-label={`${t.rating} out of 5 stars`}>
+                        {"★".repeat(t.rating)}
+                        <span className="text-slate-200">{"★".repeat(5 - t.rating)}</span>
+                      </div>
+                      <blockquote className="text-slate-600 text-sm leading-relaxed">
+                        “{t.text}”
+                      </blockquote>
+                      <figcaption className="mt-4 text-sm font-semibold text-slate-900">
+                        {t.name}
+                        <span className="font-normal text-slate-500"> · {t.location}</span>
+                      </figcaption>
+                    </figure>
+                  ))}
+                </div>
+              </section>
+            )}
 
             {/* FAQ */}
-            <section>
-              <h2 className="text-2xl md:text-3xl font-semibold text-slate-900 mb-8">
-                Frequently Asked Questions
-              </h2>
-              <div className="space-y-3">
-                {service.faqs.map((faq) => (
-                  <details
-                    key={faq.question}
-                    className="group bg-white rounded-2xl border border-slate-100 px-5 py-4 open:shadow-sm"
-                  >
-                    <summary className="cursor-pointer list-none flex justify-between items-center font-semibold text-slate-900">
-                      {faq.question}
-                      <span className="ml-4 text-pink-500 transition group-open:rotate-45 text-xl leading-none">
-                        +
-                      </span>
-                    </summary>
-                    <p className="text-slate-600 text-sm leading-relaxed mt-3">
-                      {faq.answer}
-                    </p>
-                  </details>
-                ))}
-              </div>
-            </section>
+            {faqs.length > 0 && (
+              <section>
+                <h2 className="text-2xl md:text-3xl font-semibold text-slate-900 mb-8">
+                  Frequently Asked Questions
+                </h2>
+                <div className="space-y-3">
+                  {faqs.map((faq) => (
+                    <details
+                      key={faq.question}
+                      className="group bg-white rounded-2xl border border-slate-100 px-5 py-4 open:shadow-sm"
+                    >
+                      <summary className="cursor-pointer list-none flex justify-between items-center font-semibold text-slate-900">
+                        {faq.question}
+                        <span className="ml-4 text-pink-500 transition group-open:rotate-45 text-xl leading-none">
+                          +
+                        </span>
+                      </summary>
+                      <p className="text-slate-600 text-sm leading-relaxed mt-3">
+                        {faq.answer}
+                      </p>
+                    </details>
+                  ))}
+                </div>
+              </section>
+            )}
 
             {/* SPECIALIST */}
-            <section className="pt-8 border-t border-slate-200">
-              <h2 className="text-2xl font-semibold text-slate-900 mb-4">
-                Meet Your Specialist
-              </h2>
-              <div className="flex items-start gap-5 bg-white rounded-3xl p-6 border border-slate-100">
-                {service.doctor.image && (
-                  <img
-                    src={service.doctor.image}
-                    alt={service.doctor.name}
-                    className="w-24 h-24 rounded-2xl object-cover shrink-0"
-                  />
-                )}
-                <div>
-                  {service.doctor.badge && (
-                    <span className="inline-block text-[10px] font-bold tracking-widest text-pink-600 bg-pink-50 px-2 py-1 rounded mb-2">
-                      {service.doctor.badge}
-                    </span>
+            {doctor && (
+              <section className="pt-8 border-t border-slate-200">
+                <h2 className="text-2xl font-semibold text-slate-900 mb-4">
+                  Meet Your Specialist
+                </h2>
+                <div className="flex items-start gap-5 bg-white rounded-3xl p-6 border border-slate-100">
+                  {doctor.image && (
+                    <img
+                      src={doctor.image}
+                      alt={doctor.name}
+                      className="w-24 h-24 rounded-2xl object-cover shrink-0"
+                    />
                   )}
-                  <h3 className="font-bold text-slate-900">{service.doctor.name}</h3>
-                  <p className="text-sm text-slate-600 mt-1">{service.doctor.title}</p>
-                  {service.doctor.qualification && (
-                    <p className="text-sm text-slate-500 mt-1">
-                      {service.doctor.qualification}
-                    </p>
-                  )}
-                  <p className="text-sm text-slate-500 mt-1">{service.doctor.experience}</p>
-                  {service.doctor.philosophy && (
-                    <p className="text-sm text-slate-600 italic mt-3">
-                      “{service.doctor.philosophy}”
-                    </p>
-                  )}
+                  <div>
+                    {doctor.badge && (
+                      <span className="inline-block text-[10px] font-bold tracking-widest text-pink-600 bg-pink-50 px-2 py-1 rounded mb-2">
+                        {doctor.badge}
+                      </span>
+                    )}
+                    <h3 className="font-bold text-slate-900">{doctor.name}</h3>
+                    <p className="text-sm text-slate-600 mt-1">{doctor.title}</p>
+                    {doctor.qualification && (
+                      <p className="text-sm text-slate-500 mt-1">{doctor.qualification}</p>
+                    )}
+                    {doctor.experience && (
+                      <p className="text-sm text-slate-500 mt-1">{doctor.experience}</p>
+                    )}
+                    {doctor.philosophy && (
+                      <p className="text-sm text-slate-600 italic mt-3">
+                        “{doctor.philosophy}”
+                      </p>
+                    )}
+                  </div>
                 </div>
-              </div>
-            </section>
+              </section>
+            )}
           </div>
 
           {/* RIGHT: STICKY APPOINTMENT FORM */}

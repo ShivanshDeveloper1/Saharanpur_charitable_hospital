@@ -147,9 +147,9 @@ const ValueWeProvide = () => {
 
         {/* Center Column - Hospital Image */}
         <div className="p-6 flex items-center justify-center bg-bg-light">
-          <div className="relative w-full h-[480px] lg:h-full min-h-[380px] rounded-2xl overflow-hidden shadow-sm">
+          <div className="relative w-full h-[480px] lg:h-full min-h-[380px]  rounded-2xl overflow-hidden shadow-sm">
             <Image
-              src="https://plus.unsplash.com/premium_photo-1664478214797-c3c932160cef?q=80&w=1172&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D"
+              src="/testimonials/samarthya_sir_testimonial.jpeg"
               alt="Medical facility and equipment"
               fill
               className="object-cover hover:scale-105 transition-transform duration-500"

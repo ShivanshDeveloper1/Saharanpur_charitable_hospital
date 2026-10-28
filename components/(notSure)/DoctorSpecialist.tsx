@@ -1,30 +1,34 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { doctorsData } from '@/data/doctors'; // Your global doctor data source
 
 interface DoctorSpecialistProps {
-  doctor?: {
-    name: string;
-    title: string;
-    qualification: string;
-    experience: string;
-    philosophy: string;
-    image: string;
-    badge: string;
-  };
+  doctor?: Doctor;
   serviceTitle?: string;
   serviceSlug?: string;
 }
 
-export default function DoctorSpecialist({ doctor, serviceTitle = "Specialist", serviceSlug = "general" }: DoctorSpecialistProps) {
-  // Fallback doctor info if none provided
-  const doc = doctor || {
-    name: "Dr. Samarthya Gupta, MD",
-    title: "Senior Consultant Specialist",
-    qualification: "Advanced Board Certified Specialist",
-    experience: "15+ Years Clinical Experience",
-    philosophy: "Dedicated to restoring optimal health through precision treatments and compassionate care.",
-    image: "/doctors/samarthya_gupta_orthopedic surgen.webp",
-    badge: "CHIEF CONSULTANT"
+export default function DoctorSpecialist({ 
+  doctor, 
+  serviceTitle = "Specialist", 
+  serviceSlug = "general" 
+}: DoctorSpecialistProps) {
+
+    if (!doctor) return null;   // doctor nahi mila to section hi hide
+  
+  // Find matching doctor from your new doctorsData based on serviceSlug or fallback to the first one
+  // const matchedDoctor = doctorsData.find(d => d.slug.includes(serviceSlug)) || doctorsData[0];
+
+  // Map your new doctor data structure to the UI variables
+ const doc = {
+    name: doctor.name,
+    title: `${doctor.specialty} Specialist`,
+    qualification: doctor.Qualification ?? "Advanced Board Certified Specialist",
+    experience: doctor.Experience ?? "10 years +",
+    philosophy: doctor.about ?? "Dedicated to restoring optimal health through precision treatments and compassionate care.",
+    image: doctor.image,
+    badge: "CHIEF CONSULTANT",
+    slug: doctor.slug,
   };
 
   return (
@@ -107,9 +111,9 @@ export default function DoctorSpecialist({ doctor, serviceTitle = "Specialist", 
                   <span className="text-xs font-mono uppercase tracking-wider text-accent-red font-bold">[{serviceTitle} DIVISION]</span>
                 </div>
 
-                <h1 className="text-3xl sm:text-5xl font-black uppercase text-text-dark tracking-tight leading-none mb-3">
-                  [{doc.name}]
-                </h1>
+                <h3 className="text-3xl sm:text-5xl font-black uppercase text-text-dark tracking-tight leading-none mb-3">
+                  {doc.name}
+                </h3>
 
                 <p className="text-base sm:text-lg text-[#355775] font-semibold tracking-wide">
                   {doc.qualification}
@@ -119,7 +123,7 @@ export default function DoctorSpecialist({ doctor, serviceTitle = "Specialist", 
               <div className="mb-8 p-6 bg-surface border-l-4 border-l-accent-red border-y border-r border-[#355775]/20 shadow-sm">
                 <p className="text-xs font-mono uppercase text-text-muted mb-2 tracking-wider">CLINICAL PHILOSOPHY // DOCTOR STATEMENT</p>
                 <p className="text-text-dark text-sm sm:text-base leading-relaxed">
-                  [“{doc.philosophy}”]
+                  “{doc.philosophy}”
                 </p>
               </div>
 
@@ -129,7 +133,7 @@ export default function DoctorSpecialist({ doctor, serviceTitle = "Specialist", 
                     <span className="text-[10px] font-mono uppercase tracking-wider text-text-muted">CREDENTIALS</span>
                     <span className="text-xs font-mono text-[#355775] font-semibold">01</span>
                   </div>
-                  <h3 className="text-sm font-bold text-text-dark uppercase mb-1">[BOARD CERTIFICATION]</h3>
+                  <h4 className="text-sm font-bold text-text-dark uppercase mb-1">BOARD CERTIFICATION</h4>
                   <p className="text-xs text-text-muted leading-relaxed">[{doc.qualification}]</p>
                 </div>
 
@@ -138,7 +142,7 @@ export default function DoctorSpecialist({ doctor, serviceTitle = "Specialist", 
                     <span className="text-[10px] font-mono uppercase tracking-wider text-text-muted">PRACTICE EXPERIENCE</span>
                     <span className="text-xs font-mono text-[#355775] font-semibold">02</span>
                   </div>
-                  <h3 className="text-sm font-bold text-text-dark uppercase mb-1">[CLINICAL TENURE]</h3>
+                  <h4 className="text-sm font-bold text-text-dark uppercase mb-1">CLINICAL TENURE</h4>
                   <p className="text-xs text-text-muted leading-relaxed">[{doc.experience}]</p>
                 </div>
               </div>
@@ -165,7 +169,7 @@ export default function DoctorSpecialist({ doctor, serviceTitle = "Specialist", 
                     <span className="text-[11px] font-mono text-[#DCEAF2] tracking-wider uppercase font-semibold">NEXT AVAILABLE CLINIC: THIS WEEK</span>
                   </div>
                   <h4 className="text-lg sm:text-xl font-bold tracking-tight text-white uppercase">
-                    SCHEDULE CONSULTATION WITH [{doc.name}]
+                    SCHEDULE CONSULTATION WITH {doc.name}
                   </h4>
                   <p className="text-xs text-[#DCEAF2]/80 mt-1">
                     Direct clinical evaluation, diagnostics review, and individualized treatment pathways.
@@ -174,10 +178,10 @@ export default function DoctorSpecialist({ doctor, serviceTitle = "Specialist", 
 
                 <div className="flex flex-col sm:flex-shrink-0 items-start sm:items-end gap-2">
                   <Link 
-                    href="#book-appointment" 
+                    href={`/doctor/${doc.slug}`} 
                     className="inline-flex items-center justify-center gap-3 px-8 py-4 bg-accent-red hover:bg-[#c9183d] text-white font-bold text-xs uppercase tracking-widest transition-all duration-200 border border-accent-red shadow-md group w-full sm:w-auto"
                   >
-                    <span>BOOK APPOINTMENT</span>
+                    <span>VIEW PROFILE</span>
                   </Link>
                   <span className="text-[10px] font-mono text-[#DCEAF2]/60 tracking-wider">NO REFERRAL REQUIRED</span>
                 </div>
@@ -192,7 +196,7 @@ export default function DoctorSpecialist({ doctor, serviceTitle = "Specialist", 
             <span>SECTION: CLINICAL_FACULTY // REF 10-DOC</span>
           </div>
           <div className="flex items-center gap-6">
-            <span className="hover:text-text-dark cursor-pointer transition-colors">VIEW SURGICAL TEAM DIRECTORY</span>
+            <Link href="/#doctors-section" className="hover:text-text-dark cursor-pointer transition-colors">VIEW SURGICAL TEAM DIRECTORY</Link>
             <span>/</span>
             <span className="text-text-dark font-semibold">NEXT: WHY CHOOSE OUR HOSPITAL &rarr;</span>
           </div>
