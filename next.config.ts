@@ -1,11 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  images:{
-    remotePatterns:[
+  images: {
+    remotePatterns: [
       {
- protocol: "https",
+        protocol: "https",
         hostname: "images.unsplash.com",
         pathname: "/**",
       },
@@ -15,16 +14,20 @@ const nextConfig: NextConfig = {
         pathname: "/**",
       },
       {
-        protocol:'https',
-        hostname:"lh3.googleusercontent.com",
-        pathname:'/**'
-      }
-    ]
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "/**",
+      },
+    ],
   },
-  typescript:{
-    ignoreBuildErrors:true
-  }
-  
+  typescript: {
+    ignoreBuildErrors: true,
+  },
 };
 
 export default nextConfig;

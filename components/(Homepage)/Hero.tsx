@@ -16,7 +16,7 @@ const slides = [
       "Ayushman Bharat beneficiaries can access eligible treatments at our hospital, subject to scheme rules.",
   },
   {
-    src: "https://plus.unsplash.com/premium_photo-1681843126728-04eab730febe?q=75&w=1600&auto=format&fit=crop",
+    src: "/testimonials/samarthya_sir_testimonial.jpeg",
      alt: "Medical care in a modern healthcare setting",
     message:
       "Explore our medical specialties, doctors, and available treatment services.",

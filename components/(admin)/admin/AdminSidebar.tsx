@@ -1,4 +1,3 @@
-
 "use client";
 
 import Link from "next/link";
@@ -6,12 +5,11 @@ import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
   FileText,
-  Sparkles,
+  PenSquare,
   MapPin,
   Brain,
   CalendarDays,
   Settings,
-  PanelLeftClose,
 } from "lucide-react";
 
 const navItems = [
@@ -26,9 +24,9 @@ const navItems = [
     icon: FileText,
   },
   {
-    label: "AI Blog Generator",
+    label: "Create / JSON Upload",
     href: "/admin/blogs/new",
-    icon: Sparkles,
+    icon: PenSquare,
   },
   {
     label: "Local SEO",
@@ -68,7 +66,7 @@ export default function AdminSidebar() {
             BlogStudio
           </h1>
           <p className="text-xs text-gray-500">
-            AI Publishing
+            Content Manager
           </p>
         </div>
       </div>

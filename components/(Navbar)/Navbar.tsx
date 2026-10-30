@@ -89,7 +89,7 @@ const Navbar = () => {
                   {/* Dropdown Menu for Items with Children */}
                   {item.children && (
                     /* Top-padding acts as an invisible bridge so hover never breaks */
-                    <div className="pointer-events-none invisible absolute left-0 top-full z-50 w-72 translate-y-2 pt-3 opacity-0 transition-all duration-300 ease-out group-hover:pointer-events-auto group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+                  <div className="invisible pointer-events-none absolute left-0 top-full z-50 w-72 pt-2 opacity-0 transition-opacity duration-150 group-hover:visible group-hover:pointer-events-auto group-hover:opacity-100">
                       <div className="overflow-hidden rounded-2xl border border-slate-100 bg-white p-2 shadow-2xl ring-1 ring-black/5">
                         {/* Top Accent Highlight Bar */}
                         <div className="-mx-2 -mt-2 mb-1 h-1 rounded-t-2xl bg-gradient-to-r from-accent-red via-red-500 to-amber-500" />

@@ -2,11 +2,18 @@ import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { connectDB } from '@/lib/db'
+import BlogPost, { IBlogPost } from '@/models/Blog'
 import { BLOG_POSTS } from '@/data/BlogData'
+import { SITE } from '@/lib/site'
+import BlogContentRenderer from '@/components/(Blog)/BlogContentRenderer'
 import RelatedStories from '@/components/(Blog)/RelatedStories'
 import SidebarForm from '@/components/(Blog)/SidebarForm'
 import RelatedArticlesSidebar from '@/components/(Blog)/RelatedArticlesSidebar'
+import { getSafeImageUrl } from '@/lib/image-utils'
+import { Calendar, Clock, User, ShieldCheck, ChevronRight, Layers, ArrowLeft } from 'lucide-react'
 
+export const revalidate = 60
 
 interface PageProps {
   params: Promise<{
@@ -14,183 +21,542 @@ interface PageProps {
   }>
 }
 
+async function getPostBySlug(slug: string) {
+  try {
+    await connectDB()
+    const dbPost = await BlogPost.findOne({ slug }).lean()
+    if (dbPost) {
+      return {
+        ...dbPost,
+        image: getSafeImageUrl(dbPost.image),
+        _id: String(dbPost._id),
+      } as unknown as IBlogPost
+    }
+  } catch (err) {
+    console.error('[BlogPost Page] MongoDB fetch by slug failed:', err)
+  }
+
+  // Fallback to static data
+  const staticPost = BLOG_POSTS.find((p) => p.slug === slug)
+  if (staticPost) {
+    return {
+      _id: String(staticPost.id),
+      title: staticPost.title,
+      slug: staticPost.slug,
+      excerpt: staticPost.excerpt,
+      description: staticPost.excerpt,
+      image: staticPost.image,
+      imageAlt: staticPost.title,
+      category: staticPost.category,
+      categorySlug: staticPost.category.toLowerCase(),
+      author: staticPost.author,
+      verifiedBy: staticPost.verifiedBy,
+      readTime: staticPost.readTime,
+      date: new Date(staticPost.date),
+      content: staticPost.content,
+      contentHtml: '',
+      seoTitle: staticPost.title,
+      metaDescription: staticPost.excerpt,
+      primaryKeyword: '',
+      secondaryKeywords: [],
+      internalLinks: [],
+      canonicalUrl: '',
+      pageType: 'article' as const,
+      pillarSlug: '',
+      relatedSlugs: staticPost.relatedSlugs || [],
+      tags: staticPost.tags || [],
+      isPublished: true,
+      publishedAt: staticPost.publishedAt,
+    } as IBlogPost
+  }
+
+  return null
+}
+
 // Generate dynamic SEO metadata
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params
-  const post = BLOG_POSTS.find((p) => p.slug === slug)
-  const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'MedicalWebPage',
-  'headline': post.title,
-  'description': post.excerpt,
-  'image': post.image,
-  'datePublished': post.date,
-  'author': {
-    '@type': 'Person',
-    'name': post.author || 'Clinical Specialist',
-    'jobTitle': 'Senior Consultant'
-  },
-  'reviewedBy': {
-    '@type': 'Person',
-    'name': 'Medical Review Board'
-  }
-}
+  const post = await getPostBySlug(slug)
 
   if (!post) {
     return {
-      title: 'Article Not Found',
+      title: 'Article Not Found | Healthcare Insights',
+      description: 'The requested healthcare article could not be found.',
+      robots: { index: false, follow: false },
     }
   }
 
+  // Unpublished posts should not be indexed by search engines
+  if (!post.isPublished) {
+    return {
+      title: `[Draft] ${post.title}`,
+      robots: { index: false, follow: false },
+    }
+  }
+
+  const metaTitle = post.seoTitle || `${post.title} | ${SITE.name}`
+  const metaDescription =
+    post.metaDescription || post.excerpt || post.description || 'Read expert medical insights and healthcare guidelines.'
+  const canonicalUrl = post.canonicalUrl || `${SITE.url}/blog/${post.slug}`
+  const imageUrl = post.image?.startsWith('http')
+    ? post.image
+    : post.image?.startsWith('/')
+    ? `${SITE.url}${post.image}`
+    : `${SITE.url}/blog/Hero.avif`
+
   return {
-    title: `${post.title} | Healthcare Insights`,
-    description: post.excerpt || 'Read expert medical insights and healthcare guidelines.',
+    title: metaTitle,
+    description: metaDescription,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title: metaTitle,
+      description: metaDescription,
+      url: canonicalUrl,
+      type: 'article',
+      publishedTime: post.publishedAt
+        ? new Date(post.publishedAt).toISOString()
+        : post.date
+        ? new Date(post.date).toISOString()
+        : undefined,
+      modifiedTime: post.updatedAt ? new Date(post.updatedAt).toISOString() : undefined,
+      authors: [post.author || 'Clinical Team'],
+      tags: post.tags || [],
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: post.imageAlt || post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: metaTitle,
+      description: metaDescription,
+      images: [imageUrl],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
   }
 }
 
 export default async function BlogDetailPage({ params }: PageProps) {
   const { slug } = await params
-  const post = BLOG_POSTS.find((p) => p.slug === slug)
-
-  
+  const post = await getPostBySlug(slug)
 
   if (!post) {
     notFound()
   }
 
-  // Filter latest articles (excluding current post)
-  const latestPosts = BLOG_POSTS.filter((p) => p.slug !== slug).slice(0, 6)
-  
-  // Related stories for bottom section
-  const relatedStories = BLOG_POSTS.filter((p) => p.slug !== slug).slice(0, 3)
+  // Fetch parent pillar info if this is a cluster page
+  let parentPillar: { title: string; slug: string } | null = null
+  if (post.pageType === 'cluster' && post.pillarSlug) {
+    try {
+      await connectDB()
+      const pillarDoc = await BlogPost.findOne({ slug: post.pillarSlug }).select('title slug').lean()
+      if (pillarDoc) {
+        parentPillar = { title: (pillarDoc as any).title, slug: (pillarDoc as any).slug }
+      }
+    } catch {
+      // ignore
+    }
+  }
+
+  // Fetch child cluster articles if this is a pillar page
+  let clusterPages: { title: string; slug: string; excerpt: string }[] = []
+  if (post.pageType === 'pillar') {
+    try {
+      await connectDB()
+      const clusters = await BlogPost.find({
+        isPublished: true,
+        pageType: 'cluster',
+        pillarSlug: post.slug,
+      })
+        .select('title slug excerpt')
+        .limit(6)
+        .lean()
+
+      clusterPages = clusters.map((c: any) => ({
+        title: c.title,
+        slug: c.slug,
+        excerpt: c.excerpt || '',
+      }))
+    } catch {
+      // ignore
+    }
+  }
+
+  // Fetch latest articles for sidebar (excluding current post)
+  let latestPosts: any[] = []
+  try {
+    await connectDB()
+    const dbRecents = await BlogPost.find({ isPublished: true, slug: { $ne: slug } })
+      .sort({ date: -1, createdAt: -1 })
+      .limit(6)
+      .select('title slug image date createdAt')
+      .lean()
+
+    if (dbRecents.length > 0) {
+      latestPosts = dbRecents.map((p: any) => ({
+        id: String(p._id),
+        title: p.title,
+        slug: p.slug,
+        image: getSafeImageUrl(p.image),
+        date: p.date
+          ? new Date(p.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+          : 'Recent',
+      }))
+    }
+  } catch {
+    // fallback
+    latestPosts = BLOG_POSTS.filter((p) => p.slug !== slug)
+      .slice(0, 6)
+      .map((p) => ({
+        id: p.id,
+        title: p.title,
+        slug: p.slug,
+        image: getSafeImageUrl(p.image),
+        date: p.date,
+      }))
+  }
+
+  // Fetch recommended stories for bottom section
+  let relatedStories: any[] = []
+  try {
+    await connectDB()
+    const query: any = { isPublished: true, slug: { $ne: slug } }
+    if (post.category) {
+      query.category = post.category
+    }
+    const dbStories = await BlogPost.find(query)
+      .sort({ date: -1 })
+      .limit(3)
+      .select('title slug image category date author readTime verifiedBy')
+      .lean()
+
+    if (dbStories.length > 0) {
+      relatedStories = dbStories.map((s: any) => ({
+        id: String(s._id),
+        title: s.title,
+        slug: s.slug,
+        image: getSafeImageUrl(s.image),
+        category: s.category,
+        date: s.date
+          ? new Date(s.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+          : undefined,
+        author: s.author,
+        readTime: s.readTime,
+        verifiedBy: s.verifiedBy,
+      }))
+    }
+  } catch {
+    relatedStories = BLOG_POSTS.filter((p) => p.slug !== slug).slice(0, 3)
+  }
+
+  // JSON-LD Structured Data (MedicalWebPage + BlogPosting)
+  const canonicalUrl = post.canonicalUrl || `${SITE.url}/blog/${post.slug}`
+  const imageUrl = post.image?.startsWith('http')
+    ? post.image
+    : post.image?.startsWith('/')
+    ? `${SITE.url}${post.image}`
+    : `${SITE.url}/blog/Hero.avif`
+
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'MedicalWebPage',
+    headline: post.title,
+    description: post.metaDescription || post.excerpt || post.description,
+    image: [imageUrl],
+    url: canonicalUrl,
+    datePublished: post.publishedAt
+      ? new Date(post.publishedAt).toISOString()
+      : post.date
+      ? new Date(post.date).toISOString()
+      : undefined,
+    dateModified: post.updatedAt ? new Date(post.updatedAt).toISOString() : undefined,
+    author: {
+      '@type': 'Organization',
+      name: post.author || SITE.name,
+      url: SITE.url,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: SITE.name,
+      url: SITE.url,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE.url}/icon.png`,
+      },
+    },
+    medicalAudience: {
+      '@type': 'MedicalAudience',
+      audienceType: 'Patients',
+    },
+  }
+
+  // Breadcrumb schema
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: SITE.url,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Healthcare Insights',
+        item: `${SITE.url}/blog`,
+      },
+      ...(parentPillar
+        ? [
+            {
+              '@type': 'ListItem',
+              position: 3,
+              name: parentPillar.title,
+              item: `${SITE.url}/blog/${parentPillar.slug}`,
+            },
+            {
+              '@type': 'ListItem',
+              position: 4,
+              name: post.title,
+              item: canonicalUrl,
+            },
+          ]
+        : [
+            {
+              '@type': 'ListItem',
+              position: 3,
+              name: post.title,
+              item: canonicalUrl,
+            },
+          ]),
+    ],
+  }
+
+  const formattedDate = post.publishedAt
+    ? new Date(post.publishedAt).toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+      })
+    : post.date
+    ? new Date(post.date).toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+      })
+    : 'Recent'
+
+  const hasFeaturedImage =
+    post.image && (post.image.startsWith('http') || post.image.startsWith('/'))
 
   return (
     <main className="bg-background text-foreground min-h-screen py-8 lg:py-12">
-        {/* <script
-  type="application/ld+json"
-  dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-/> */}
+      {/* JSON-LD Schemas */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+
       {/* Breadcrumb Navigation */}
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
-        <nav className="mb-6 flex items-center gap-2 text-xs text-text-muted sm:text-sm">
-          <Link href="/" className="hover:text-accent-red transition-colors">Home</Link>
-          <span>/</span>
-          <Link href="/blog" className="hover:text-accent-red transition-colors">Healthcare Insights</Link>
-          <span>/</span>
-          <span className="text-foreground font-medium truncate max-w-xs">{post.title}</span>
+        <nav
+          aria-label="Breadcrumb"
+          className="mb-6 flex flex-wrap items-center gap-1.5 text-xs text-text-muted sm:text-sm"
+        >
+          <Link href="/" className="hover:text-accent-red transition-colors">
+            Home
+          </Link>
+          <ChevronRight className="h-3 w-3 text-text-muted/60" />
+          <Link href="/blog" className="hover:text-accent-red transition-colors">
+            Healthcare Insights
+          </Link>
+
+          {parentPillar && (
+            <>
+              <ChevronRight className="h-3 w-3 text-text-muted/60" />
+              <Link
+                href={`/blog/${parentPillar.slug}`}
+                className="hover:text-accent-red transition-colors font-medium text-medical-line"
+              >
+                {parentPillar.title}
+              </Link>
+            </>
+          )}
+
+          <ChevronRight className="h-3 w-3 text-text-muted/60" />
+          <span className="text-foreground font-medium truncate max-w-xs sm:max-w-md">
+            {post.title}
+          </span>
         </nav>
       </div>
 
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
-          
           {/* ================= LEFT MAIN CONTENT (8 COLS) ================= */}
-          <article className="lg:col-span-8">
-            
-            {/* Category Tag */}
-            <span className="inline-block bg-accent-red px-3 py-1 text-xs font-bold uppercase tracking-wider text-white">
-              {post.category || 'HEALTHCARE'}
-            </span>
+          <article className="lg:col-span-8 min-w-0">
+            {/* Category Tag & Archetype Badge */}
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-block bg-accent-red px-3 py-1 text-xs font-bold uppercase tracking-wider text-white rounded">
+                {post.category || 'HEALTHCARE'}
+              </span>
 
-            {/* Main Headline */}
+              {post.pageType === 'pillar' && (
+                <span className="inline-flex items-center gap-1 rounded bg-purple-100 px-2.5 py-1 text-xs font-bold uppercase tracking-wider text-purple-900 border border-purple-200">
+                  <Layers className="h-3 w-3" />
+                  Core Guide
+                </span>
+              )}
+
+              {post.pageType === 'cluster' && parentPillar && (
+                <Link
+                  href={`/blog/${parentPillar.slug}`}
+                  className="inline-flex items-center gap-1 rounded bg-sky-50 px-2.5 py-1 text-xs font-semibold text-sky-800 border border-sky-200 hover:bg-sky-100 transition-colors"
+                >
+                  <ArrowLeft className="h-3 w-3" />
+                  <span>Series: {parentPillar.title}</span>
+                </Link>
+              )}
+            </div>
+
+            {/* Primary Article H1 */}
             <h1 className="mt-4 text-3xl font-extrabold leading-tight tracking-tight text-foreground sm:text-4xl lg:text-5xl font-serif">
               {post.title}
             </h1>
 
-            {/* Article Lead Subtitle */}
-            <p className="mt-4 text-base italic text-text-muted sm:text-lg leading-relaxed border-l-2 border-accent-red pl-4">
-              {post.excerpt || 'Explore expert clinical insights and practical guidance on symptoms, treatments, and medical care.'}
-            </p>
+            {/* Article Lead Subtitle / Excerpt */}
+            {(post.excerpt || post.description) && (
+              <p className="mt-4 text-base italic text-text-muted sm:text-lg leading-relaxed border-l-3 border-accent-red pl-4">
+                {post.excerpt || post.description}
+              </p>
+            )}
 
             {/* Author & Meta Row */}
-            <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-text-muted border-t border-b border-medical-line/15 py-3 uppercase tracking-wider font-semibold">
-              <span>BY <strong className="text-foreground">{post.author || 'DR. CLINICAL TEAM'}</strong></span>
+            <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-text-muted border-t border-b border-medical-line/15 py-3.5 uppercase tracking-wider font-semibold">
+              <span className="flex items-center gap-1.5">
+                <User className="h-3.5 w-3.5 text-medical-line" />
+                BY <strong className="text-foreground">{post.author || 'CLINICAL TEAM'}</strong>
+              </span>
               <span>•</span>
-              <span>
-  {post.date instanceof Date 
-    ? post.date.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) 
-    : post.date || 'OCTOBER 17, 2026'}
-</span>
+              <span className="flex items-center gap-1.5">
+                <Calendar className="h-3.5 w-3.5 text-medical-line" />
+                {formattedDate}
+              </span>
               <span>•</span>
-              <span>5 MIN READ</span>
+              <span className="flex items-center gap-1.5">
+                <Clock className="h-3.5 w-3.5 text-medical-line" />
+                {post.readTime || '5 MIN READ'}
+              </span>
+
+              {post.verifiedBy && (
+                <>
+                  <span>•</span>
+                  <span className="flex items-center gap-1 text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 text-[10px]">
+                    <ShieldCheck className="h-3 w-3" />
+                    VERIFIED: {post.verifiedBy}
+                  </span>
+                </>
+              )}
             </div>
 
-            {/* Hero Featured Image */}
-            <div className="relative my-8 aspect-[16/9] w-full overflow-hidden rounded-xl bg-surface border border-medical-line/10">
-              <Image
-                src={post.image}
-                alt={post.title}
-                fill
-                priority
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 800px"
-              />
-            </div>
+            {/* Featured Image */}
+            {hasFeaturedImage && (
+              <div className="relative my-8 aspect-[16/9] w-full overflow-hidden rounded-xl bg-surface border border-medical-line/10 shadow-sm">
+                <img
+                  src={post.image}
+                  alt={post.imageAlt || post.title}
+                  className="h-full w-full object-cover"
+                  loading="eager"
+                />
+              </div>
+            )}
 
-            {/* Body Content with Drop Cap Hierarchy */}
-       <div className="prose prose-lg max-w-none text-foreground leading-relaxed">
-  {post.content.map((block, index) => {
-    // 1. Render Paragraphs & Inline Links Safely
-    if (block.type === 'paragraph') {
-      return (
-        <p key={index} className="text-base sm:text-lg mt-4 leading-relaxed">
-          {block.segments.map((segment, sIndex) => {
-            if (segment.isLink && segment.slug) {
-              // Check if the target slug exists in database
-              const targetExists = BLOG_POSTS.some((p) => p.slug === segment.slug);
+            {/* Main Rich-Text Content (Handles HTML, Markdown, Tiptap JSON, Tables, Lists, Images) */}
+            <BlogContentRenderer
+              content={post.content}
+              contentHtml={post.contentHtml}
+            />
 
-              if (targetExists) {
-                return (
-                  <Link 
-                    key={sIndex} 
-                    href={`/blog/${segment.slug}`} 
-                    className="text-accent-red font-medium underline underline-offset-4 hover:opacity-80 transition-opacity"
-                  >
-                    {segment.text}
-                  </Link>
-                );
-              } else {
-                // Fallback gracefully if article is unavailable in database
-                return <span key={sIndex} className="text-foreground">{segment.text}</span>;
-              }
-            }
-            return <span key={sIndex}>{segment.text}</span>;
-          })}
-        </p>
-      );
-    }
+            {/* If Pillar Page: Display Cluster Sub-topics (Topic Cluster Internal Linking) */}
+            {post.pageType === 'pillar' && clusterPages.length > 0 && (
+              <section className="mt-12 rounded-2xl border border-medical-line/20 bg-surface/60 p-6 sm:p-8">
+                <div className="flex items-center gap-2 text-medical-line mb-3">
+                  <Layers className="h-5 w-5 text-accent-red" />
+                  <h3 className="text-lg font-bold uppercase tracking-wider text-foreground font-serif">
+                    Articles in this Comprehensive Guide
+                  </h3>
+                </div>
+                <p className="text-xs sm:text-sm text-text-muted mb-6">
+                  Explore focused deep-dives on specific procedures, diagnosis, and recovery:
+                </p>
 
-    // 2. Render Headings
-    if (block.type === 'heading') {
-      return (
-        <h2 key={index} className="mt-10 mb-4 text-2xl font-bold tracking-tight text-foreground border-b border-medical-line/20 pb-2">
-          {block.segments[0]?.text}
-        </h2>
-      );
-    }
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {clusterPages.map((c) => (
+                    <Link
+                      key={c.slug}
+                      href={`/blog/${c.slug}`}
+                      className="group block rounded-xl border border-medical-line/15 bg-background p-4 transition-all hover:border-accent-red/40 hover:shadow-xs"
+                    >
+                      <h4 className="text-sm font-bold text-foreground group-hover:text-accent-red transition-colors">
+                        {c.title}
+                      </h4>
+                      {c.excerpt && (
+                        <p className="mt-1.5 line-clamp-2 text-xs text-text-muted leading-relaxed">
+                          {c.excerpt}
+                        </p>
+                      )}
+                      <span className="mt-3 inline-flex items-center text-xs font-semibold text-accent-red">
+                        Read chapter →
+                      </span>
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            )}
 
-    // 3. Render Lists
-    if (block.type === 'list') {
-      return (
-        <ul key={index} className="mt-4 space-y-2 list-disc list-inside text-text-muted text-base">
-          {block.items.map((item, iIndex) => (
-            <li key={iIndex}>{item}</li>
-          ))}
-        </ul>
-      );
-    }
-
-    return null;
-  })}
-</div>
-            {/* Article Navigation Footer */}
-          
+            {/* Tags footer */}
+            {post.tags && post.tags.length > 0 && (
+              <div className="mt-10 border-t border-medical-line/15 pt-6">
+                <span className="text-xs font-bold uppercase tracking-wider text-text-muted mr-3">
+                  Related Topics:
+                </span>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {post.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-md bg-medical-blue/30 px-2.5 py-1 text-xs font-medium text-foreground"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
           </article>
 
           {/* ================= RIGHT SIDEBAR (4 COLS) ================= */}
           <aside className="lg:col-span-4 space-y-10">
-            
-            {/* 1. Compact Solution/Appointment Form */}
+            {/* 1. Compact Appointment Form */}
             <SidebarForm />
 
             {/* 2. Latest Articles Sidebar */}
@@ -199,32 +565,31 @@ export default async function BlogDetailPage({ params }: PageProps) {
             {/* 3. Follow Us / Social Links */}
             <div className="space-y-3">
               <h3 className="text-xs font-bold uppercase tracking-widest text-foreground border-b-2 border-foreground pb-2">
-                FOLLOW US
+                FOLLOW OUR HEALTH UPDATES
               </h3>
-              <p className="text-xs text-text-muted">Get health tips & medical news directly in your feed:</p>
-              
+              <p className="text-xs text-text-muted">
+                Receive doctor verified health tips & medical updates directly:
+              </p>
+
               <div className="space-y-2">
-                <a href="#" className="flex items-center gap-3 rounded-lg bg-[#0088cc] px-4 py-2.5 text-xs font-semibold text-white transition hover:opacity-90">
-                  <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
-                  Telegram Channel
-                </a>
-                <a href="#" className="flex items-center gap-3 rounded-lg bg-[#25D366] px-4 py-2.5 text-xs font-semibold text-white transition hover:opacity-90">
-                  <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24"><path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.964 9.964 0 001.333 4.993L2 22l5.233-1.237a9.982 9.982 0 004.779 1.221h.004c5.505 0 9.988-4.478 9.989-9.985 0-2.667-1.037-5.176-2.922-7.062A9.923 9.923 0 0012.012 2z"/></svg>
-                  WhatsApp Channel
-                </a>
-                <a href="#" className="flex items-center gap-3 rounded-lg bg-[#FF0000] px-4 py-2.5 text-xs font-semibold text-white transition hover:opacity-90">
-                  <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                  YouTube - Health Tips
+                <a
+                  href={`https://wa.me/${SITE.phone.replace(/[^0-9]/g, '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 rounded-lg bg-[#25D366] px-4 py-2.5 text-xs font-semibold text-white transition hover:opacity-90"
+                >
+                  <svg className="h-4 w-4 fill-current" viewBox="0 0 24 24">
+                    <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.964 9.964 0 001.333 4.993L2 22l5.233-1.237a9.982 9.982 0 004.779 1.221h.004c5.505 0 9.988-4.478 9.989-9.985 0-2.667-1.037-5.176-2.922-7.062A9.923 9.923 0 0012.012 2z" />
+                  </svg>
+                  WhatsApp Consultation
                 </a>
               </div>
             </div>
-
           </aside>
         </div>
 
-        {/* ================= BOTTOM RELATED STORIES SECTION ================= */}
+        {/* ================= BOTTOM RECOMMENDED STORIES SECTION ================= */}
         <RelatedStories stories={relatedStories} />
-
       </div>
     </main>
   )

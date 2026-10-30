@@ -25,7 +25,7 @@ export async function connectDB() {
   if (cache.conn) return cache.conn;
 
   if (!cache.promise) {
-    cache.promise = mongoose.connect(MONGODB_URI);
+    cache.promise = mongoose.connect(MONGODB_URI as string);
   }
 
   try {

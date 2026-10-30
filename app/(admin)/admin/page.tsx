@@ -1,30 +1,25 @@
 // Admin bogs
 import Link from "next/link";
-import {
-  FileText,
-  Sparkles,
-  MapPin,
-  ArrowRight,
-} from "lucide-react";
+import { FileText, Sparkles, Tags, ArrowRight } from "lucide-react";
 
 const cards = [
   {
-    title: "All Posts",
-    description: "Manage your blog articles and drafts.",
-    href: "/admin/posts",
+    title: "New Blog",
+    description: "Create, publish, and manage blog posts.",
+    href: "/admin/blogs/new",
     icon: FileText,
+  },
+  {
+    title: "Blog Categories",
+    description: "Manage categories and taxonomy for all blogs.",
+    href: "/admin/categories",
+    icon: Tags,
   },
   {
     title: "AI Blog Generator",
     description: "Generate location-focused articles with AI.",
-    href: "/admin/generator",
+    href: "/admin/blogs/new",
     icon: Sparkles,
-  },
-  {
-    title: "Local SEO",
-    description: "Manage cities, localities, and keywords.",
-    href: "/admin/local-seo",
-    icon: MapPin,
   },
 ];
 
